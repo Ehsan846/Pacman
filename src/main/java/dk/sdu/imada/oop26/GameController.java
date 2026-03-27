@@ -30,16 +30,16 @@ public class GameController {
     public void keypressed(KeyEvent event) {
         switch (event.getCode()) {
             case UP:
-                pacman.setYSpeed(-10);
+                pacman.setYSpeed(-40);
                 break;
             case DOWN:
-                pacman.setYSpeed(10);
+                pacman.setYSpeed(40);
                 break;
             case LEFT:
-                pacman.setXSpeed(-10);
+                pacman.setXSpeed(-40);
                 break;
             case RIGHT:
-                pacman.setXSpeed(10);
+                pacman.setXSpeed(40);
                 break;
         }
 
