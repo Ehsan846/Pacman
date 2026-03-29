@@ -1,15 +1,24 @@
-package main.java.dk.sdu.imada.oop26.Model;
+package dk.sdu.imada.oop26.Model;
 
-public class MovingEntities {
-    private double x;
-    private double y;
+public abstract class MovingEntities {
+    protected double x, y, speed;
+    Direction direction = Direction.NONE;
 
-    //public double getX() return x; 
-    //public double getY() return y; 
-    //public void setX(double x) this.x = x; 
-    //public void setY(double y) this.y = y; 
-
-    public enum Direction {
-        UP, DOWN, LEFT, RIGHT
+    public void update(double dt) {
+        // Collision check her?
+        // Reference til maze?
+        
+        x += speed * dt * direction.dx;
+        y += speed * dt * direction.dy;
     }
+
+    public double getx() {
+        return x;
+    }
+
+    public double gety() {
+        return y;
+    }
+    //public void setX(double x) this.x = x; 
+    //public void setY(double y) this.y = y;
 }

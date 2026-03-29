@@ -1,35 +1,39 @@
-package dk.sdu.imada.oop26;
+package dk.sdu.imada.oop26.Model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PacmanModel {
-    private double x;
-    private double y;
-    private double xSpeed;
-    private double ySpeed;
+    private Pacman pacman;
+    private List<Ghost> ghosts;
 
-    PacmanModel() {
-        x = 10;
-        y = 20;
+    public PacmanModel() {
+        pacman = new Pacman(/* reference til maze ? */);
+
+        ghosts = new ArrayList<Ghost>(4);
+        ghosts.add(new Inky());
+        ghosts.add(new Inky());
+        ghosts.add(new Inky());
+        ghosts.add(new Inky());
     }
 
-    public void move(double dt) {
-        x += xSpeed*dt;
-        y += ySpeed*dt;
+    public void update(double dt) {
+        pacman.update(dt);
+
+        for (Ghost ghost : ghosts) {
+            ghost.update(dt);
+        }
     }
 
     public double getx() {
-        return x;
+        return pacman.getx();
     }
 
     public double gety() {
-        return y;
+        return pacman.gety();
     }
-
-
-    public void setXSpeed(double x) {
-        xSpeed = x;
-    }
-
-    public void setYSpeed(double y) {
-        ySpeed = y;
+    
+    public void setDirection(Direction direction) {
+        pacman.setDirection(direction);
     }
 }

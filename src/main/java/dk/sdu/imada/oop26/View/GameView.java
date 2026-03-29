@@ -1,10 +1,14 @@
-package dk.sdu.imada.oop26;
+package dk.sdu.imada.oop26.View;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
+
+import dk.sdu.imada.oop26.Model.PacmanModel;
+import dk.sdu.imada.oop26.Controller.GameController;
+
 
 public class GameView {
 
@@ -15,7 +19,7 @@ public class GameView {
 
     private GameController gamecontroller;
 
-    GameView(PacmanModel pacman, GameController gamecontroller) {
+    public GameView(PacmanModel pacman, GameController gamecontroller) {
         canvas = new Canvas(1600, 1000);
         scene = new Scene(new Group(canvas));
         gc = canvas.getGraphicsContext2D();
@@ -34,5 +38,10 @@ public class GameView {
 
         gc.setFill(Color.YELLOW);
         gc.fillOval(pacman.getx(), pacman.gety(), 40, 40);
+
+
+        // TEST :D
+        Sprite sprite = new Sprite("board.png");
+        sprite.draw(gc, pacman.getx(), pacman.gety());
     }
 }

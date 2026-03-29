@@ -1,16 +1,20 @@
-package dk.sdu.imada.oop26;
+package dk.sdu.imada.oop26.Controller;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.animation.AnimationTimer;
 
+import dk.sdu.imada.oop26.Model.Direction;
+import dk.sdu.imada.oop26.Model.PacmanModel;
+import dk.sdu.imada.oop26.View.GameView;
+ 
 public class GameController {
     private GameView view;
-    private PacmanModel pacman;
+    private PacmanModel model;
 
-    GameController() {
-        pacman = new PacmanModel();
-        view = new GameView(pacman, this);
+    public GameController() {
+        model = new PacmanModel();
+        view = new GameView(model, this);
     }
 
     public void start() {
@@ -20,7 +24,7 @@ public class GameController {
                 double dt = (currentNanoTime - lastNanoTime)/1000000000.0;
                 lastNanoTime = currentNanoTime;
 
-                pacman.move(dt);
+                model.update(dt);
                 view.update();
 
             }
@@ -29,23 +33,26 @@ public class GameController {
 
     public void keypressed(KeyEvent event) {
         switch (event.getCode()) {
+            case W:
             case UP:
-                pacman.setYSpeed(-40);
+                model.setDirection(Direction.UP);
                 break;
+            case S:
             case DOWN:
-                pacman.setYSpeed(40);
+                model.setDirection(Direction.DOWN);
                 break;
+            case A:
             case LEFT:
-                pacman.setXSpeed(-40);
+                model.setDirection(Direction.LEFT);
                 break;
+            case D:
             case RIGHT:
-                pacman.setXSpeed(40);
+                model.setDirection(Direction.RIGHT);
                 break;
         }
-
     }
 
-    Scene getScene() {
+    public Scene getScene() {
         return view.getScene();
     }
 }
