@@ -41,7 +41,7 @@ public class GameView {
 
 
         // TEST :D
-        Sprite sprite = new Sprite("board.png");
+        Sprite sprite = new Sprite("spritesheet.png");
         sprite.draw(gc, pacman.getx(), pacman.gety());
     }
 }
