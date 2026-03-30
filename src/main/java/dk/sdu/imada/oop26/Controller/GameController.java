@@ -5,16 +5,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.animation.AnimationTimer;
 
 import dk.sdu.imada.oop26.Model.Direction;
-import dk.sdu.imada.oop26.Model.PacmanModel;
+import dk.sdu.imada.oop26.Model.GameModel;
 import dk.sdu.imada.oop26.View.GameView;
- 
+
 public class GameController {
     private GameView view;
-    private PacmanModel model;
+    private GameModel model;
 
     public GameController() {
-        model = new PacmanModel();
-        view = new GameView(model, this);
+        model = new GameModel();
+        view = new GameView(this);
     }
 
     public void start() {
@@ -25,7 +25,7 @@ public class GameController {
                 lastNanoTime = currentNanoTime;
 
                 model.update(dt);
-                view.update();
+                view.update(model);
 
             }
         }.start();
