@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.Group;
 
 import dk.sdu.imada.oop26.Model.GameModel;
+import dk.sdu.imada.oop26.Model.GhostType;
+import dk.sdu.imada.oop26.Model.Ghost;
 import dk.sdu.imada.oop26.Controller.GameController;
 
 
@@ -37,6 +39,23 @@ public class GameView {
         gc.setFill(Color.YELLOW);
         gc.fillOval(model.getx(), model.gety(), 40, 40);
 
+        for (Ghost ghost : model.getghosts()) {
+            switch (ghost.gettype()) {
+                case INKY:
+                    gc.setFill(Color.BLUE);
+                    break;
+                case PINKY:
+                    gc.setFill(Color.PINK);
+                    break;
+                case BLINKY:
+                    gc.setFill(Color.RED);
+                    break;
+                case CLYDE:
+                    gc.setFill(Color.ORANGE);
+                    break;
+            }
+            gc.fillOval(ghost.getx(), ghost.gety(), 40, 40);
+        }
 
         // TEST :D
 //        Sprite sprite = new Sprite("spritesheet.png");

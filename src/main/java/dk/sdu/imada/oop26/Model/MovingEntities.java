@@ -7,7 +7,7 @@ public abstract class MovingEntities {
     public void update(double dt) {
         // Collision check her?
         // Reference til maze?
-        
+
         x += speed * dt * direction.dx;
         y += speed * dt * direction.dy;
     }
@@ -19,6 +19,7 @@ public abstract class MovingEntities {
     public double gety() {
         return y;
     }
-    //public void setX(double x) this.x = x; 
-    //public void setY(double y) this.y = y;
+
+    public void setX(double x) { this.x = x; }
+    public void setY(double y) { this.y = y; }
 }

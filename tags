@@ -76,8 +76,11 @@
 Add your files	README.md	/^## Add your files$/;"	s	chapter:Pacman
 Authors and acknowledgment	README.md	/^## Authors and acknowledgment$/;"	s	chapter:Editing this README
 BEGIN	src/main/java/dk/sdu/imada/oop26/Model/Game.java	/^        BEGIN, NORMAL, POWER, END$/;"	e	enum:Game.State	file:
+BLINKY	src/main/java/dk/sdu/imada/oop26/Model/GhostType.java	/^    BLINKY,$/;"	e	enum:GhostType	file:
 Badges	README.md	/^## Badges$/;"	s	chapter:Editing this README
+Blinky	src/main/java/dk/sdu/imada/oop26/Model/Blinky.java	/^    public Blinky() {$/;"	m	class:Blinky	signature:()
 Blinky	src/main/java/dk/sdu/imada/oop26/Model/Blinky.java	/^public class Blinky extends Ghost {$/;"	c
+CLYDE	src/main/java/dk/sdu/imada/oop26/Model/GhostType.java	/^    CLYDE,$/;"	e	enum:GhostType	file:
 Clyde	src/main/java/dk/sdu/imada/oop26/Model/Clyde.java	/^public class Clyde extends Ghost {$/;"	c
 Collaborate with your team	README.md	/^## Collaborate with your team$/;"	s	chapter:Pacman
 Contributing	README.md	/^## Contributing$/;"	s	chapter:Editing this README
@@ -98,6 +101,9 @@ GameView	src/main/java/dk/sdu/imada/oop26/View/GameView.java	/^    public GameVi
 GameView	src/main/java/dk/sdu/imada/oop26/View/GameView.java	/^public class GameView {$/;"	c
 Getting started	README.md	/^## Getting started$/;"	s	chapter:Pacman
 Ghost	src/main/java/dk/sdu/imada/oop26/Model/Ghost.java	/^public class Ghost extends MovingEntities {$/;"	c
+GhostType	src/main/java/dk/sdu/imada/oop26/Model/GhostType.java	/^public enum GhostType {$/;"	g
+INKY	src/main/java/dk/sdu/imada/oop26/Model/GhostType.java	/^    INKY,$/;"	e	enum:GhostType	file:
+Inky	src/main/java/dk/sdu/imada/oop26/Model/Inky.java	/^    public Inky() {$/;"	m	class:Inky	signature:()
 Inky	src/main/java/dk/sdu/imada/oop26/Model/Inky.java	/^public class Inky extends Ghost {$/;"	c
 Installation	README.md	/^## Installation$/;"	s	chapter:Editing this README
 Integrate with your tools	README.md	/^## Integrate with your tools$/;"	s	chapter:Pacman
@@ -109,11 +115,13 @@ MovingEntities	src/main/java/dk/sdu/imada/oop26/Model/MovingEntities.java	/^publ
 NONE	src/main/java/dk/sdu/imada/oop26/Model/Direction.java	/^    NONE(0, 0);$/;"	e	enum:Direction	file:
 NORMAL	src/main/java/dk/sdu/imada/oop26/Model/Game.java	/^        BEGIN, NORMAL, POWER, END$/;"	e	enum:Game.State	file:
 Name	README.md	/^## Name$/;"	s	chapter:Editing this README
+PINKY	src/main/java/dk/sdu/imada/oop26/Model/GhostType.java	/^    PINKY,$/;"	e	enum:GhostType	file:
 POWER	src/main/java/dk/sdu/imada/oop26/Model/Game.java	/^        BEGIN, NORMAL, POWER, END$/;"	e	enum:Game.State	file:
 Pacman	README.md	/^# Pacman$/;"	c
 Pacman	src/main/java/dk/sdu/imada/oop26/Model/Pacman.java	/^    public Pacman() {$/;"	m	class:Pacman	signature:()
 Pacman	src/main/java/dk/sdu/imada/oop26/Model/Pacman.java	/^public class Pacman extends MovingEntities {$/;"	c
 Pellet	src/main/java/dk/sdu/imada/oop26/Model/Maze.java	/^        Pellet,$/;"	e	enum:Maze.Tiles	file:
+Pinky	src/main/java/dk/sdu/imada/oop26/Model/Pinky.java	/^    public Pinky() {$/;"	m	class:Pinky	signature:()
 Pinky	src/main/java/dk/sdu/imada/oop26/Model/Pinky.java	/^public class Pinky extends Ghost {$/;"	c
 PowerPellet	src/main/java/dk/sdu/imada/oop26/Model/Maze.java	/^        PowerPellet$/;"	e	enum:Maze.Tiles	file:
 Project status	README.md	/^## Project status$/;"	s	chapter:Editing this README
@@ -143,6 +151,7 @@ dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/Direction.java	/
 dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/Game.java	/^package dk.sdu.imada.oop26.Model;$/;"	p
 dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/GameModel.java	/^package dk.sdu.imada.oop26.Model;$/;"	p
 dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/Ghost.java	/^package dk.sdu.imada.oop26.Model;$/;"	p
+dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/GhostType.java	/^package dk.sdu.imada.oop26.Model;$/;"	p
 dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/Inky.java	/^package dk.sdu.imada.oop26.Model;$/;"	p
 dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/Maze.java	/^package dk.sdu.imada.oop26.Model;$/;"	p
 dk.sdu.imada.oop26.Model	src/main/java/dk/sdu/imada/oop26/Model/MovingEntities.java	/^package dk.sdu.imada.oop26.Model;$/;"	p
@@ -187,6 +196,7 @@ start	src/main/java/dk/sdu/imada/oop26/Controller/GameController.java	/^    publ
 start	src/main/java/dk/sdu/imada/oop26/Main.java	/^    public void start(Stage primaryStage) throws Exception {$/;"	m	class:Main	signature:(Stage primaryStage)
 state	src/main/java/dk/sdu/imada/oop26/Model/Game.java	/^    private State state;$/;"	f	class:Game	file:
 time	src/main/java/dk/sdu/imada/oop26/Model/Game.java	/^    private int time;$/;"	f	class:Game	file:
+type	src/main/java/dk/sdu/imada/oop26/Model/Ghost.java	/^    private GhostType type;$/;"	f	class:Ghost	file:
 update	src/main/java/dk/sdu/imada/oop26/Model/GameModel.java	/^    public void update(double dt) {$/;"	m	class:GameModel	signature:(double dt)
 update	src/main/java/dk/sdu/imada/oop26/Model/MovingEntities.java	/^    public void update(double dt) {$/;"	m	class:MovingEntities	signature:(double dt)
 update	src/main/java/dk/sdu/imada/oop26/View/GameView.java	/^    public void update(GameModel model) {$/;"	m	class:GameView	signature:(GameModel model)
