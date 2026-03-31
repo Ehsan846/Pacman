@@ -6,6 +6,7 @@ import java.util.List;
 public class GameModel {
     private Pacman pacman;
     private List<Ghost> ghosts;
+    private Maze maze;
 
     public GameModel() {
         pacman = new Pacman(/* reference til maze ? */);
@@ -25,6 +26,8 @@ public class GameModel {
         ghosts.get(2).setY(600);
         ghosts.get(3).setX(700);
         ghosts.get(3).setY(800);
+
+        maze = new Maze();
     }
 
     public void update(double dt) {
@@ -33,6 +36,10 @@ public class GameModel {
         for (Ghost ghost : ghosts) {
             ghost.update(dt);
         }
+    }
+
+    public Maze getMaze() {
+        return maze;
     }
 
     public List<Ghost> getghosts() {

@@ -25,7 +25,7 @@ public class GameController {
                 lastNanoTime = currentNanoTime;
 
                 model.update(dt);
-                view.update(model);
+                view.drawGame(model);
 
             }
         }.start();
