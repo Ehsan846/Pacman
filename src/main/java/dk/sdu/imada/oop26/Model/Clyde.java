@@ -1,4 +1,4 @@
-package main.java.dk.sdu.imada.oop26.Model;
+package dk.sdu.imada.oop26.Model;
 
 public class Clyde extends Ghost {
     public Clyde() {

@@ -1,4 +1,4 @@
-package main.java.dk.sdu.imada.oop26.Model;
+package dk.sdu.imada.oop26.Model;
 
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
@@ -10,13 +10,13 @@ public abstract class MovingEntities {
     public void update(double dt, Maze maze) {
         // Collision check her?
         // Reference til maze?
-        double newX = x + speed * dt * direction.dx;
-        double newY = y + speed * dt * direction.dy;
+        x += speed * dt * direction.dx;
+        y += speed * dt * direction.dy;
 
-        if(maze.getTile(newX, newY) != Tile.Wall){
-            x = newX;
-            y = newY;
-        }
+// ,        if(maze.getTile(newX, newY) != Tile.Wall){
+// ,            x = newX;
+// ,            y = newY;
+// ,        }
     }
 
     public double getx() {
