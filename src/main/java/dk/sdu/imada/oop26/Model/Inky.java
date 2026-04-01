@@ -1,4 +1,4 @@
-package dk.sdu.imada.oop26.Model;
+package main.java.dk.sdu.imada.oop26.Model;
 
 public class Inky extends Ghost {
     public Inky() {

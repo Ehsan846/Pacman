@@ -1,4 +1,4 @@
-package dk.sdu.imada.oop26.Model;
+package main.java.dk.sdu.imada.oop26.Model;
 
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;

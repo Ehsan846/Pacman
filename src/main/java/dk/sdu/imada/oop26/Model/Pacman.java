@@ -1,19 +1,39 @@
 package dk.sdu.imada.oop26.Model;
-package dk.sdu.imada.oop26;
 
-import main.java.dk.sdu.imada.oop26.Model.Maze;
-import main.java.dk.sdu.imada.oop26.Model.MovingEntities;
-import dk.sdu.imada.oop26.Model.Tile;
-import dk.sdu.imada.oop26.Model.Game;
 
 public class Pacman extends MovingEntities {
     public Pacman() {
-        x = 100;
-        y = 100;
-        speed = 125;
+        this.x = 100;
+        this.y = 100;
+        this.speed = 125;
     }
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+        }
+
+
+    @Override
+    public PacmanEvent update(double dt, Maze maze) {
+        super.update(dt, maze); // bruger parent methode til at rykke pacman;
+
+        if(maze.getTile(x, y) == Tile.Pellet){
+            maze.emptyTile(x, y);
+            return PacmanEvent.pacPellet;   
+        }
+
+        else if (maze.getTile(x, y) == Tile.PowerPellet){ 
+            maze.emptyTile(x,y);
+            return PacmanEvent.pacPower; 
+    
+        }
+
+        return PacmanEvent.pacNone; 
+
+        // add for ghost
+
+
+        // add for win (pacman ate all pellets)
     }
+    
 }

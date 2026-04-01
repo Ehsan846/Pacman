@@ -1,5 +1,4 @@
-package dk.sdu.imada.oop26.Model;
-
+package main.java.dk.sdu.imada.oop26.Model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,7 +46,13 @@ public class Maze {
         }
     }
 
-    public Tile getTile(int x, int y) {
+    public Tile getTile(double x, double y) {
         return tiles[x][y];
     }
+
+
+    public void emptyTile(double x, double y) {
+        tiles[x][y] = Tile.Empty;
+    }
+    
 }

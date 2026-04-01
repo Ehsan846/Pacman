@@ -3,6 +3,14 @@ package dk.sdu.imada.oop26.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.java.dk.sdu.imada.oop26.Model.Blinky;
+import main.java.dk.sdu.imada.oop26.Model.Clyde;
+import main.java.dk.sdu.imada.oop26.Model.Ghost;
+import main.java.dk.sdu.imada.oop26.Model.Inky;
+import main.java.dk.sdu.imada.oop26.Model.Maze;
+import main.java.dk.sdu.imada.oop26.Model.PacmanEvent;
+import main.java.dk.sdu.imada.oop26.Model.Pinky;
+
 public class GameModel {
     private Pacman pacman;
     private List<Ghost> ghosts;
@@ -31,10 +39,16 @@ public class GameModel {
     }
 
     public void update(double dt) {
-        pacman.update(dt);
+
+        PacmanEvent event = pacman.update(dt, maze);
+        if (event == PacmanEvent.pacPellet) {
+            score += 1;
+        } else if (event == PacmanEvent.pacPower) {
+            score += 10;
+        }
 
         for (Ghost ghost : ghosts) {
-            ghost.update(dt);
+            ghost.update(dt, maze);
         }
     }
 
