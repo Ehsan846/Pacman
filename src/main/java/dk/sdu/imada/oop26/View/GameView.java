@@ -20,14 +20,19 @@ public class GameView {
     private Canvas canvas;
     private GraphicsContext gc;
 
-    private GameController gamecontroller;
+    private Sprite backgroundImage;
+
+    // pixel per tile
+    public static final int PPT = 23;
+
 
     public GameView(GameController gamecontroller) {
         canvas = new Canvas(1600, 1000);
         scene = new Scene(new Group(canvas));
         gc = canvas.getGraphicsContext2D();
-        this.gamecontroller = gamecontroller;
         scene.setOnKeyPressed(event -> gamecontroller.keypressed(event));
+
+        backgroundImage = new Sprite("board.png");
     }
 
     public Scene getScene() {
@@ -37,12 +42,10 @@ public class GameView {
     public void drawGame(GameModel model) {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, 1600, 1000);
-
-        Sprite sprite = new Sprite("board.png");
-        sprite.draw(gc, 0, 0);
+        backgroundImage.draw(gc, 0, 0);
 
         gc.setFill(Color.YELLOW);
-        gc.fillOval(model.getx(), model.gety(), 40, 40);
+        gc.fillOval(model.getx()*PPT-PPT/2, model.gety()*PPT-PPT/2, PPT*2, PPT*2);
 
         for (Ghost ghost : model.getghosts()) {
             switch (ghost.gettype()) {
@@ -67,9 +70,9 @@ public class GameView {
         for (int x = 0; x < maze.MAZE_WIDTH; x++) {
             for (int y = 0; y < maze.MAZE_HEIGHT; y++) {
                 if (maze.getTile(x, y) == Tile.Pellet)
-                    gc.fillOval(23/2 + x*23, 23/2 + y*23, 7, 7);
+                    gc.fillOval(PPT/2 + x*PPT-3, PPT/2 + y*PPT-3, 6, 6);
                 if (maze.getTile(x, y) == Tile.PowerPellet)
-                    gc.fillOval(23/2 + x*23, 23/2 + y*23, 15, 15);
+                    gc.fillOval(PPT/2 + x*PPT-7, PPT/2 + y*PPT-7, 14, 14);
             }
         }
 

@@ -8,15 +8,31 @@ public abstract class MovingEntities {
     Direction direction = Direction.NONE;
 
     public void update(double dt, Maze maze) {
-        // Collision check her?
-        // Reference til maze?
-        x += speed * dt * direction.dx;
-        y += speed * dt * direction.dy;
+        double newX = x + speed * dt * direction.dx;
+        double newY = y + speed * dt * direction.dy;
 
-// ,        if(maze.getTile(newX, newY) != Tile.Wall){
-// ,            x = newX;
-// ,            y = newY;
-// ,        }
+
+        switch (direction) {
+            case UP:
+            case DOWN:
+                newX = Math.round(newX);
+                break;
+            case LEFT:
+            case RIGHT:
+                newY = Math.round(newY);
+                break;
+            case NONE:
+                newX = Math.round(newX);
+                newY = Math.round(newY);
+                break;
+        }
+
+        boolean notInWall = maze.getTile(newX, newY) != Tile.Wall && maze.getTile(newX+0.9999, newY+0.9999) != Tile.Wall;
+
+        if (maze.getTile(newX, newY) != Tile.Wall && maze.getTile(newX+1-1e-5, newY+1-1e-5) != Tile.Wall) {
+            x = newX;
+            y = newY;
+        }
     }
 
     public double getx() {
@@ -25,6 +41,10 @@ public abstract class MovingEntities {
 
     public double gety() {
         return y;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public void setX(double x) { this.x = x; }
