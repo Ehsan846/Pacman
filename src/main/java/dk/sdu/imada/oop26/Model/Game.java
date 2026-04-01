@@ -1,7 +1,7 @@
 package dk.sdu.imada.oop26.Model;
 
 public class Game {
-    private int score;
+    private int score = 0;
     private int time;
     private State state;
 
@@ -20,6 +20,10 @@ public class Game {
         this.pinky  = new Pinky();
         this.clyde  = new Clyde();
         this.state  = State.BEGIN;
+    }
+
+    public void addScore(int numb){
+        score += numb;
     }
 
     public enum State {
