@@ -9,23 +9,13 @@ public class GameModel {
     private Maze maze;
 
     public GameModel() {
-        pacman = new Pacman(/* reference til maze ? */);
+        pacman = new Pacman();
 
         ghosts = new ArrayList<Ghost>(4);
         ghosts.add(new Inky());
-        ghosts.add(new Blinky());
-        ghosts.add(new Clyde());
         ghosts.add(new Pinky());
-
-        // testing
-        ghosts.get(0).setX(100);
-        ghosts.get(0).setY(200);
-        ghosts.get(1).setX(300);
-        ghosts.get(1).setY(400);
-        ghosts.get(2).setX(500);
-        ghosts.get(2).setY(600);
-        ghosts.get(3).setX(700);
-        ghosts.get(3).setY(800);
+        ghosts.add(new Clyde());
+        ghosts.add(new Blinky());
 
         maze = new Maze();
     }
@@ -34,8 +24,21 @@ public class GameModel {
 
         pacman.update(dt, maze);
 
+        double x = pacman.getx() + 0.5;
+        double y = pacman.gety() + 0.5;
+
+        if (maze.getTile(x, y) == Tile.Pellet) {
+            maze.emptyTile(x, y);
+        }
+        else if (maze.getTile(x, y) == Tile.PowerPellet) {
+            maze.emptyTile(x, y);
+            // Powerup
+        }
+
+
+
         for (Ghost ghost : ghosts) {
-            ghost.update(dt, maze);
+            // ghost.update(dt, maze);
         }
     }
 

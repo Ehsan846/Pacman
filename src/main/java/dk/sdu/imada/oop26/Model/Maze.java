@@ -54,8 +54,8 @@ public class Maze {
     }
 
 
-    public void emptyTile(int x, int y) {
-        tiles[x][y] = Tile.Empty;
+    public void emptyTile(double x, double y) {
+        tiles[(int)x][(int)y] = Tile.Empty;
     }
 
 }

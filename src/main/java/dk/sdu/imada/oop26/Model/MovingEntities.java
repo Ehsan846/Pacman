@@ -27,7 +27,7 @@ public abstract class MovingEntities {
                 break;
         }
 
-        boolean notInWall = maze.getTile(newX, newY) != Tile.Wall && maze.getTile(newX+0.9999, newY+0.9999) != Tile.Wall;
+        // boolean notInWall = maze.getTile(newX, newY) != Tile.Wall && maze.getTile(newX+0.9999, newY+0.9999) != Tile.Wall;
 
         if (maze.getTile(newX, newY) != Tile.Wall && maze.getTile(newX+1-1e-5, newY+1-1e-5) != Tile.Wall) {
             x = newX;
@@ -41,6 +41,10 @@ public abstract class MovingEntities {
 
     public double gety() {
         return y;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     public void setDirection(Direction direction) {
