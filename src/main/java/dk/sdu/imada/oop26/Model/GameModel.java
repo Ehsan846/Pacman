@@ -21,7 +21,6 @@ public class GameModel {
     }
 
     public void update(double dt) {
-
         pacman.update(dt, maze);
 
         double x = pacman.getx() + 0.5;
@@ -38,7 +37,7 @@ public class GameModel {
 
 
         for (Ghost ghost : ghosts) {
-            // ghost.update(dt, maze);
+            ghost.update(dt, maze);
         }
     }
 
@@ -56,6 +55,10 @@ public class GameModel {
 
     public double gety() {
         return pacman.gety();
+    }
+
+    public Direction getDirection() {
+        return pacman.getDirection();
     }
 
     public void setDirection(Direction direction) {

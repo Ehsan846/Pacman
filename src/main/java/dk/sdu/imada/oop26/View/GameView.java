@@ -26,7 +26,11 @@ public class GameView {
     public static final int PPT = 23;
     
     public static final int WIDTH = 644;
-    public static final int HEIGHT = 714;
+    public static final int HEIGHT = 754;
+
+
+
+    private int frame = 0;
 
 
     public GameView(GameController gamecontroller) {
@@ -35,7 +39,11 @@ public class GameView {
         gc = canvas.getGraphicsContext2D();
         scene.setOnKeyPressed(event -> gamecontroller.keypressed(event));
 
+        gc.setImageSmoothing(false);
         backgroundImage = new Sprite("board.png");
+
+        Sprite spritesheet = new Sprite("spritesheet.png");
+        Sprites.loadSprites(spritesheet.getImage());
     }
 
     public Scene getScene() {
@@ -49,9 +57,7 @@ public class GameView {
         gc.translate(PPT / 2, PPT / 2); // Offset for centering
 
         drawMaze(model);
-
         drawPacman(model);
-        
         drawGhosts(model);
 
         gc.restore();
@@ -61,6 +67,10 @@ public class GameView {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, WIDTH, HEIGHT);
         backgroundImage.draw(gc, 0, 0);
+
+        for (int i = 0; i < 5; i++) {
+            Sprites.hpSprite.draw(gc, 75 + i * 40, HEIGHT - 20);
+        }
     }
 
     private void drawMaze(GameModel model) {
@@ -79,27 +89,33 @@ public class GameView {
     }
 
     private void drawPacman(GameModel model) {
-        gc.setFill(Color.YELLOW);
-        gc.fillOval(model.getx() * PPT - 20, model.gety() * PPT - 20, 40, 40);
+        frame++;
+        final int rotationOffset = 4 * Sprites.getRotationOffset(model.getDirection());
+
+        Sprites.pacmanSprites[(frame / 3) % 4 + rotationOffset].draw(
+           gc, model.getx() * PPT, model.gety() * PPT
+        );
     }
 
     private void drawGhosts(GameModel model) {
         for (Ghost ghost : model.getghosts()) {
+            final int rotationOffset = 2 * Sprites.getRotationOffset(ghost.getDirection());
+            Sprite ghostSprite = Sprites.ghostSprites[16 + rotationOffset + (frame / 10) % 2];;
             switch (ghost.gettype()) {
                 case INKY:
-                    gc.setFill(Color.BLUE);
+                    ghostSprite = Sprites.ghostSprites[16 + rotationOffset + (frame / 10) % 2];
                     break;
                 case PINKY:
-                    gc.setFill(Color.PINK);
+                    ghostSprite = Sprites.ghostSprites[8 + rotationOffset + (frame / 10) % 2];
                     break;
                 case BLINKY:
-                    gc.setFill(Color.RED);
+                    ghostSprite = Sprites.ghostSprites[rotationOffset + (frame / 10) % 2];
                     break;
                 case CLYDE:
-                    gc.setFill(Color.ORANGE);
+                    ghostSprite = Sprites.ghostSprites[24 + rotationOffset + (frame / 10) % 2];
                     break;
             }
-            gc.fillOval(ghost.getx() * PPT - 20, ghost.gety() * PPT - 20, 40, 40);
+            ghostSprite.draw(gc, ghost.getx() * PPT, ghost.gety() * PPT);
         }
     }
 }

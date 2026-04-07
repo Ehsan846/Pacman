@@ -21,10 +21,6 @@ public abstract class MovingEntities {
             case RIGHT:
                 newY = Math.round(newY);
                 break;
-            case NONE:
-                newX = Math.round(newX);
-                newY = Math.round(newY);
-                break;
         }
 
         // boolean notInWall = maze.getTile(newX, newY) != Tile.Wall && maze.getTile(newX+0.9999, newY+0.9999) != Tile.Wall;
