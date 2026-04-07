@@ -51,6 +51,7 @@ public class GameView {
     }
 
     public void drawGame(GameModel model) {
+        frame++;
         drawBackground(model);
 
         gc.save();
@@ -89,7 +90,6 @@ public class GameView {
     }
 
     private void drawPacman(GameModel model) {
-        frame++;
         final int rotationOffset = 4 * Sprites.getRotationOffset(model.getDirection());
 
         Sprites.pacmanSprites[(frame / 3) % 4 + rotationOffset].draw(

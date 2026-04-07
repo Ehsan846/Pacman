@@ -3,7 +3,7 @@ package dk.sdu.imada.oop26.Model;
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
 
-public abstract class MovingEntities {
+public abstract class MovingEntity {
     protected double x, y, speed;
     Direction direction = Direction.NONE;
 

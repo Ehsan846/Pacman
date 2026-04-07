@@ -40,12 +40,14 @@ public class Sprites {
 
     public static int getRotationOffset(Direction dir) {
         switch (dir) {
+            case UP:
+                return 2;
             case DOWN:
                 return 3;
             case LEFT:
                 return 1;
-            case UP:
-                return 2;
+            case RIGHT:
+                return 0;
         }
         return 0;
     }
