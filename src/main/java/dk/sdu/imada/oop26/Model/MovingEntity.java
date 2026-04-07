@@ -5,9 +5,18 @@ import dk.sdu.imada.oop26.Model.Tile;
 
 public abstract class MovingEntity {
     protected double x, y, speed;
-    Direction direction = Direction.NONE;
+    private Direction direction = Direction.NONE;
+    private Direction wantedDirection = direction;
 
     public void update(double dt, Maze maze) {
+        if (move(wantedDirection, dt, maze)) {
+            direction = wantedDirection;
+        } else {
+            move(direction, dt, maze);
+        }
+    }
+
+    private boolean move(Direction direction, double dt, Maze maze) {
         double newX = x + speed * dt * direction.dx;
         double newY = y + speed * dt * direction.dy;
 
@@ -29,7 +38,9 @@ public abstract class MovingEntity {
             maze.getTile(newX+1-1e-5, newY+1-1e-5) != Tile.Wall) {
             x = newX;
             y = newY;
+            return true;
         }
+        return false;
     }
 
     public double getx() {
@@ -46,6 +57,11 @@ public abstract class MovingEntity {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+        wantedDirection = direction;
+    }
+
+    public void setWantedDirection(Direction direction) {
+        wantedDirection = direction;
     }
 
 

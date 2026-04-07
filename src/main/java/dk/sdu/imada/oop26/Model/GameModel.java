@@ -62,6 +62,6 @@ public class GameModel {
     }
 
     public void setDirection(Direction direction) {
-        pacman.setDirection(direction);
+        pacman.setWantedDirection(direction);
     }
 }
