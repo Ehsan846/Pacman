@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.canvas.GraphicsContext;
 
 import dk.sdu.imada.oop26.Model.Direction;
+import dk.sdu.imada.oop26.Model.GhostType;
 
 public class Sprites {
     public static Sprite[] pacmanSprites;
@@ -45,6 +46,20 @@ public class Sprites {
                 return 1;
             case UP:
                 return 2;
+        }
+        return 0;
+    }
+
+    public static int getGhostOffset(GhostType ghostType) {
+        switch (ghostType) {
+            case INKY:
+                return 16;
+            case PINKY:
+                return 8;
+            case BLINKY:
+                return 0;
+            case CLYDE:
+                return 24;
         }
         return 0;
     }

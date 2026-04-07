@@ -100,22 +100,8 @@ public class GameView {
     private void drawGhosts(GameModel model) {
         for (Ghost ghost : model.getghosts()) {
             final int rotationOffset = 2 * Sprites.getRotationOffset(ghost.getDirection());
-            Sprite ghostSprite = Sprites.ghostSprites[16 + rotationOffset + (frame / 10) % 2];;
-            switch (ghost.gettype()) {
-                case INKY:
-                    ghostSprite = Sprites.ghostSprites[16 + rotationOffset + (frame / 10) % 2];
-                    break;
-                case PINKY:
-                    ghostSprite = Sprites.ghostSprites[8 + rotationOffset + (frame / 10) % 2];
-                    break;
-                case BLINKY:
-                    ghostSprite = Sprites.ghostSprites[rotationOffset + (frame / 10) % 2];
-                    break;
-                case CLYDE:
-                    ghostSprite = Sprites.ghostSprites[24 + rotationOffset + (frame / 10) % 2];
-                    break;
-            }
-            ghostSprite.draw(gc, ghost.getx() * PPT, ghost.gety() * PPT);
+            final int spriteOffset = Sprites.getGhostOffset(ghost.gettype());
+            Sprites.ghostSprites[spriteOffset + rotationOffset + (frame / 10) % 2].draw(gc, ghost.getx() * PPT, ghost.gety() * PPT);
         }
     }
 }
