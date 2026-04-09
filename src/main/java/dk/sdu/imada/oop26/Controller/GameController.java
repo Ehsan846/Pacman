@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.animation.AnimationTimer;
 
+
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.GameModel;
 import dk.sdu.imada.oop26.View.GameView;
@@ -25,7 +26,7 @@ public class GameController {
                 lastNanoTime = currentNanoTime;
 
                 model.update(dt);
-                view.drawGame(model);
+                view.drawGame(model, dt);
 
             }
         }.start();

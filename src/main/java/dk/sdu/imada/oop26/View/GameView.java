@@ -24,13 +24,16 @@ public class GameView {
 
     // pixel per tile
     public static final int PPT = 23;
-    
+
     public static final int WIDTH = 644;
     public static final int HEIGHT = 754;
+
+    public static final double TIME_PER_FRAME = 0.015;
 
 
 
     private int frame = 0;
+    private double total_time;
 
 
     public GameView(GameController gamecontroller) {
@@ -50,8 +53,12 @@ public class GameView {
         return scene;
     }
 
-    public void drawGame(GameModel model) {
-        frame++;
+    public void drawGame(GameModel model, double dt) {
+        total_time += dt;
+        if (total_time > TIME_PER_FRAME) {
+            total_time = 0;
+            frame++;
+        }
         drawBackground(model);
 
         gc.save();
