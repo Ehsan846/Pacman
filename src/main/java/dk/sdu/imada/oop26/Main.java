@@ -15,7 +15,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GameController gamecontroller = new GameController();
-        // Scene scene = new Scene(new Group(gamecontroller.getCanvas()));
         primaryStage.setScene(gamecontroller.getScene());
         primaryStage.setTitle("Pac-Man");
         gamecontroller.start();
