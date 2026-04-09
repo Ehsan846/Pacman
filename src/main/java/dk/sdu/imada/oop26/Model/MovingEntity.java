@@ -1,5 +1,8 @@
 package dk.sdu.imada.oop26.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
 
@@ -7,6 +10,8 @@ public abstract class MovingEntity {
     protected double x, y, speed;
     private Direction direction = Direction.NONE;
     private Direction wantedDirection = direction;
+
+    List<Tile> disallowedTiles = new ArrayList<>(List.of(Tile.Wall));
 
     public void update(double dt, Maze maze) {
         if (move(wantedDirection, dt, maze)) {
@@ -32,10 +37,10 @@ public abstract class MovingEntity {
                 break;
         }
 
-        if (maze.getTile(newX, newY) != Tile.Wall &&
-            maze.getTile(newX+1-1e-5, newY) != Tile.Wall &&
-            maze.getTile(newX, newY+1-1e-5) != Tile.Wall &&
-            maze.getTile(newX+1-1e-5, newY+1-1e-5) != Tile.Wall) {
+        if (!disallowedTiles.contains(maze.getTile(newX, newY)) &&
+            !disallowedTiles.contains(maze.getTile(newX+1-1e-5, newY)) &&
+            !disallowedTiles.contains(maze.getTile(newX, newY+1-1e-5)) &&
+            !disallowedTiles.contains(maze.getTile(newX+1-1e-5, newY+1-1e-5))) {
             x = newX;
             y = newY;
             return true;

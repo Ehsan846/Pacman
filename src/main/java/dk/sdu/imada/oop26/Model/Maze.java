@@ -39,12 +39,17 @@ public class Maze {
                     case 'o':
                         tiles[x][y] = Tile.PowerPellet;
                         break;
+                    default:
                     case ' ':
                         tiles[x][y] = Tile.Empty;
+                        break;
+                    case '_':
+                        tiles[x][y] = Tile.Gate;
                         break;
                 }
             }
         }
+        reader.close();
     }
 
     public Tile getTile(double x, double y) {

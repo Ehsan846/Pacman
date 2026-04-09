@@ -6,6 +6,8 @@ public class Pacman extends MovingEntity {
         x = 13.5;
         y = 23;
         speed = 10;
+
+        disallowedTiles.add(Tile.Gate);
     }
 
 }
