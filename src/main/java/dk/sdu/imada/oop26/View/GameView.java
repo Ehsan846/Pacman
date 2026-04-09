@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
+import javafx.scene.text.Font;
 
 import dk.sdu.imada.oop26.Model.GameModel;
 import dk.sdu.imada.oop26.Model.GhostType;
@@ -43,6 +44,7 @@ public class GameView {
         scene.setOnKeyPressed(event -> gamecontroller.keypressed(event));
 
         gc.setImageSmoothing(false);
+        gc.setFont(new Font(26));
         backgroundImage = new Sprite("board.png");
 
         Sprite spritesheet = new Sprite("spritesheet.png");
@@ -67,6 +69,7 @@ public class GameView {
         drawMaze(model);
         drawPacman(model);
         drawGhosts(model);
+        drawScore(model);
 
         gc.restore();
     }
@@ -110,5 +113,10 @@ public class GameView {
             final int spriteOffset = Sprites.getGhostOffset(ghost.gettype());
             Sprites.ghostSprites[spriteOffset + rotationOffset + (frame / 10) % 2].draw(gc, ghost.getx() * PPT, ghost.gety() * PPT);
         }
+    }
+
+    private void drawScore(GameModel model) {
+        gc.setFill(Color.WHITE);
+        gc.fillText(Integer.toString(model.getScore()), WIDTH - 200, HEIGHT - 20);
     }
 }

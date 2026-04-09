@@ -7,6 +7,7 @@ public class GameModel {
     private Pacman pacman;
     private List<Ghost> ghosts;
     private Maze maze;
+    private int score;
 
     public GameModel() {
         pacman = new Pacman();
@@ -28,8 +29,10 @@ public class GameModel {
 
         if (maze.getTile(x, y) == Tile.Pellet) {
             maze.emptyTile(x, y);
+            score++;
         }
         else if (maze.getTile(x, y) == Tile.PowerPellet) {
+            score++;
             maze.emptyTile(x, y);
             // Powerup
         }
@@ -56,6 +59,10 @@ public class GameModel {
 
     public double gety() {
         return pacman.gety();
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public Direction getDirection() {
