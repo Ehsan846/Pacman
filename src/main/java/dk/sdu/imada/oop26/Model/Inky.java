@@ -6,7 +6,7 @@ public class Inky extends Ghost {
         x = 11.5;
         y = 14;
     }
-    public void update_direction(Pacman pacman, Maze maze) {
+    public void update_direction(Pacman pacman, Maze maze, double dt) {
 
     }
 

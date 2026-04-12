@@ -6,7 +6,7 @@ public class Clyde extends Ghost {
         x = 15.5;
         y = 14;
     }
-    public void update_direction(Pacman pacman, Maze maze) {
+    public void update_direction(Pacman pacman, Maze maze, double dt) {
 
     }
 }

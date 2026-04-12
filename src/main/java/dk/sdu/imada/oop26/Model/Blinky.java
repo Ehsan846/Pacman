@@ -1,5 +1,4 @@
 package dk.sdu.imada.oop26.Model;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class Blinky extends Ghost {
         y = 11;
     }
 
-    public void update_direction(Pacman pacman, Maze maze) {
+    public void update_direction(Pacman pacman, Maze maze, double dt) {
         double xdiff = x - pacman.x;
         double ydiff = y - pacman.y;
 
@@ -29,11 +28,10 @@ public class Blinky extends Ghost {
         }
 
         for (Direction d : priority) {
-            if (canMove(d, maze)) {
+            if (canMove(d, maze, dt)) {
                 setWantedDirection(d);
-                break;
+                return;
             }
         }
     }
-
 }
