@@ -43,6 +43,15 @@ public abstract class MovingEntity {
         return false;
     }
 
+    protected boolean canMove(Direction direction, Maze maze) {
+    double checkX = x + direction.dx;
+    double checkY = y + direction.dy;
+    return maze.getTile(checkX, checkY) != Tile.Wall &&
+           maze.getTile(checkX+1-1e-5, checkY) != Tile.Wall &&
+           maze.getTile(checkX, checkY+1-1e-5) != Tile.Wall &&
+           maze.getTile(checkX+1-1e-5, checkY+1-1e-5) != Tile.Wall;
+}
+
     public double getx() {
         return x;
     }
