@@ -8,30 +8,37 @@ public class Blinky extends Ghost {
         x = 13.5;
         y = 11;
     }
+ 
+
+    
 
     public void update_direction(Pacman pacman, Maze maze, double dt) {
-        double xdiff = x - pacman.x;
-        double ydiff = y - pacman.y;
 
-        List<Direction> priority = new ArrayList<>();
+        double minDist = Double.POSITIVE_INFINITY; 
 
-        if (Math.abs(xdiff) > Math.abs(ydiff)) {
-            priority.add(xdiff < 0 ? Direction.RIGHT : Direction.LEFT);
-            priority.add(ydiff < 0 ? Direction.DOWN : Direction.UP);
-            priority.add(ydiff < 0 ? Direction.UP : Direction.DOWN);
-            priority.add(xdiff < 0 ? Direction.LEFT : Direction.RIGHT);
-        } else {
-            priority.add(ydiff < 0 ? Direction.DOWN : Direction.UP);
-            priority.add(xdiff < 0 ? Direction.RIGHT : Direction.LEFT);
-            priority.add(xdiff < 0 ? Direction.LEFT : Direction.RIGHT);
-            priority.add(ydiff < 0 ? Direction.UP : Direction.DOWN);
-        }
-
-        for (Direction d : priority) {
-            if (canMove(d, maze, dt)) {
-                setWantedDirection(d);
-                return;
+        for(Direction d :  Direction.values()){
+            if ( d == Direction.NONE || d == Direction.oppositeDirection(getDirection())) {
+                continue;
             }
+            double Newx = x + d.dx; 
+            double NewY = y + d.dy; 
+
+
+            if(maze.getTile(Newx, NewY) != Tile.Wall){
+
+                double xdiff = Newx - pacman.x; 
+                double ydiff = NewY - pacman.y; 
+                double dist = Math.sqrt(Math.pow(xdiff, 2) + Math.pow(ydiff, 2));
+            
+                if (minDist > dist){
+                    System.out.println("Data: " +  Newx +" " + NewY + " "+ d + " " + minDist + " " + dist);
+                    minDist = dist; 
+                    setWantedDirection(d);
+                }
+            }
+            
         }
+        System.out.println(" ");
     }
+
 }
