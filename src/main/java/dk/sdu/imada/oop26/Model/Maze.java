@@ -48,14 +48,14 @@ public class Maze {
     }
 
     public Tile getTile(double x, double y) {
-        if (x < 0 || x > MAZE_WIDTH || y < 0 || y > MAZE_HEIGHT)
+        if (x < 0 || x >= MAZE_WIDTH || y < 0 || y >= MAZE_HEIGHT)
             return Tile.Wall;
         return tiles[(int)x][(int)y];
     }
 
 
     public void emptyTile(double x, double y) {
-        if (x < 0 || x > MAZE_WIDTH || y < 0 || y > MAZE_HEIGHT)
+        if (x < 0 || x >= MAZE_WIDTH || y < 0 || y >= MAZE_HEIGHT)
             return;
         tiles[(int)x][(int)y] = Tile.Empty;
     }

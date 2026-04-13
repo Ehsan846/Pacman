@@ -12,10 +12,9 @@ public abstract class MovingEntity {
         if (move(wantedDirection, dt, maze)) {
             direction = wantedDirection;
         } else {
-            move(direction, dt, maze);
-            if( !move(direction, dt, maze)){
-                x = Math.round(x); 
-                y = Math.round(y); 
+            if (!move(direction, dt, maze)){
+                x = Math.round(x);
+                y = Math.round(y);
             }
         }
     }

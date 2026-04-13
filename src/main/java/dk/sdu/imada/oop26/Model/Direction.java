@@ -20,7 +20,7 @@ public enum Direction {
             case UP:
                 return DOWN;
             case DOWN:
-                return DOWN;
+                return UP;
             case LEFT:
                 return RIGHT;
             case RIGHT:

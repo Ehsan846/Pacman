@@ -7,38 +7,34 @@ public class Blinky extends Ghost {
         type = GhostType.BLINKY;
         x = 13.5;
         y = 11;
+        x = 15;
+        y = 23;
     }
- 
-
-    
 
     public void update_direction(Pacman pacman, Maze maze, double dt) {
+        Direction opposite = Direction.oppositeDirection(getDirection());
 
-        double minDist = Double.POSITIVE_INFINITY; 
+        double minDist = Double.POSITIVE_INFINITY;
 
-        for(Direction d :  Direction.values()){
-            if ( d == Direction.NONE || d == Direction.oppositeDirection(getDirection())) {
+        for (Direction d : Direction.values()){
+            if (d == Direction.NONE)
                 continue;
-            }
-            double Newx = x + d.dx; 
-            double NewY = y + d.dy; 
+            if (d == opposite)
+                continue;
+            double newx = Math.floor(x) + d.dx;
+            double newy = Math.floor(y) + d.dy;
 
+            if (maze.getTile(newx, newy) != Tile.Wall) {
+                double xdiff = newx - pacman.x;
+                double ydiff = newy - pacman.y;
+                double dist = xdiff*xdiff + ydiff*ydiff;
 
-            if(maze.getTile(Newx, NewY) != Tile.Wall){
-
-                double xdiff = Newx - pacman.x; 
-                double ydiff = NewY - pacman.y; 
-                double dist = Math.sqrt(Math.pow(xdiff, 2) + Math.pow(ydiff, 2));
-            
-                if (minDist > dist){
-                    System.out.println("Data: " +  Newx +" " + NewY + " "+ d + " " + minDist + " " + dist);
-                    minDist = dist; 
+                if (dist < minDist) {
+                    minDist = dist;
                     setWantedDirection(d);
                 }
             }
-            
         }
-        System.out.println(" ");
     }
 
 }
