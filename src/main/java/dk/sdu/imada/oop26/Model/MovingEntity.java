@@ -23,7 +23,6 @@ public abstract class MovingEntity {
         double newX = x + speed * dt * direction.dx;
         double newY = y + speed * dt * direction.dy;
 
-
         switch (direction) {
             case UP:
             case DOWN:
@@ -48,16 +47,6 @@ public abstract class MovingEntity {
 
 
 
-
-    protected boolean canMove(Direction direction, Maze maze, double dt) {
-        double size = speed * dt; // = 0.128
-        double checkX = Math.round(x) + size * direction.dx;
-        double checkY = Math.round(y) + size * direction.dy;
-        return maze.getTile(checkX, checkY) != Tile.Wall &&
-            maze.getTile(checkX + size, checkY) != Tile.Wall &&
-            maze.getTile(checkX, checkY + size) != Tile.Wall &&
-            maze.getTile(checkX + size, checkY + size) != Tile.Wall;
-    }
 
     public double getx() {
         return x;

@@ -7,7 +7,7 @@ public abstract class Ghost extends MovingEntity {
         speed = 8;
     }
 
-    public abstract void update_direction(Pacman pacman, Maze maze, double dt);
+    public abstract void update_direction(Pacman pacman, Maze maze);
 
     public GhostType gettype() {
         return type;

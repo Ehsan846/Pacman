@@ -59,5 +59,4 @@ public class Maze {
             return;
         tiles[(int)x][(int)y] = Tile.Empty;
     }
-
 }

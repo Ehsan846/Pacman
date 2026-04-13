@@ -11,12 +11,11 @@ public class Blinky extends Ghost {
         y = 23;
     }
 
-    public void update_direction(Pacman pacman, Maze maze, double dt) {
+    public void update_direction(Pacman pacman, Maze maze) {
         Direction opposite = Direction.oppositeDirection(getDirection());
-
         double minDist = Double.POSITIVE_INFINITY;
 
-        for (Direction d : Direction.values()){
+        for (Direction d : Direction.values()) {
             if (d == Direction.NONE)
                 continue;
             if (d == opposite)
@@ -36,5 +35,4 @@ public class Blinky extends Ghost {
             }
         }
     }
-
 }
