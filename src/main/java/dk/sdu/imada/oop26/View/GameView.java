@@ -12,6 +12,7 @@ import dk.sdu.imada.oop26.Model.GhostType;
 import dk.sdu.imada.oop26.Model.Ghost;
 import dk.sdu.imada.oop26.Model.Maze;
 import dk.sdu.imada.oop26.Model.Tile;
+import dk.sdu.imada.oop26.Model.GameState;
 import dk.sdu.imada.oop26.Controller.GameController;
 
 
@@ -80,7 +81,7 @@ public class GameView {
         backgroundImage.draw(gc, 0, 0);
 
         for (int i = 0; i < 5; i++) {
-            Sprites.hpSprite.draw(gc, 75 + i * 40, HEIGHT - 20);
+            Sprites.hp.draw(gc, 75 + i * Sprites.DRAWSIZE, HEIGHT - 20);
         }
     }
 
@@ -102,16 +103,33 @@ public class GameView {
     private void drawPacman(GameModel model) {
         final int rotationOffset = 4 * Sprites.getRotationOffset(model.getDirection());
 
-        Sprites.pacmanSprites[(frame / 3) % 4 + rotationOffset].draw(
+        Sprites.pacman[(frame / 3) % 4 + rotationOffset].draw(
            gc, model.getx() * PPT, model.gety() * PPT
         );
     }
 
     private void drawGhosts(GameModel model) {
-        for (Ghost ghost : model.getghosts()) {
-            final int rotationOffset = 2 * Sprites.getRotationOffset(ghost.getDirection());
+        for (Ghost ghost : model.getGhosts()) {
+            final int rotationOffset = Sprites.getRotationOffset(ghost.getDirection());
             final int spriteOffset = Sprites.getGhostOffset(ghost.gettype());
-            Sprites.ghostSprites[spriteOffset + rotationOffset + (frame / 10) % 2].draw(gc, ghost.getx() * PPT, ghost.gety() * PPT);
+
+            Sprite ghostSprite = Sprites.ghostDeath[rotationOffset];
+            if (ghost.isAlive()) {
+                if (model.getState() == GameState.POWER) {
+                    final double duration = model.getPowerDuration();
+                    int blinkOffset = 0;
+                    if (duration < 4 && ((int)(duration * 3)) % 2 == 1) {
+                        blinkOffset = 2;
+                    }
+                    ghostSprite = Sprites.ghostPower[(frame / 10) % 2 + blinkOffset];
+                } else {
+                    ghostSprite = Sprites.ghosts[spriteOffset + 2 * rotationOffset + (frame / 10) % 2];
+                }
+            }
+
+            ghostSprite.draw(
+                gc, ghost.getx() * PPT, ghost.gety() * PPT
+            );
         }
     }
 

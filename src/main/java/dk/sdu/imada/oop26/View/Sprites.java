@@ -7,34 +7,51 @@ import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.GhostType;
 
 public class Sprites {
-    public static Sprite[] pacmanSprites;
-    public static Sprite[] pacmanDeathSprites;
-    public static Sprite hpSprite;
-    public static final int pacmanCount = 4;
+    public static Sprite[] pacman;
+    public static Sprite[] pacmanDeath;
+    public static Sprite hp;
+    public static final int pacmanSpriteCount = 4;
 
-    public static Sprite[] ghostSprites;
+    public static Sprite[] ghosts;
+    public static Sprite[] ghostPower;
+    public static Sprite[] ghostDeath;
+
+    public static final int DRAWSIZE = 40;
+
+    private static final int OFFSET = 455;
+    private static final int SIZE = 16;
 
     public static void loadSprites(Image sheet) {
-        pacmanSprites = new Sprite[pacmanCount * 4];
+        pacman = new Sprite[pacmanSpriteCount * 4];
         for (int i = 0; i < 4; i++) {
-            pacmanSprites[i * pacmanCount] = new Sprite(sheet, 455, i * 16, 16, 16, 40, 40);
-            pacmanSprites[i * pacmanCount + 1] = new Sprite(sheet, 455 + 16, i * 16, 16, 16, 40, 40);
-            pacmanSprites[i * pacmanCount + 2] = new Sprite(sheet, 455 + 32, 0, 16, 16, 40, 40);
-            pacmanSprites[i * pacmanCount + 3] = pacmanSprites[i * pacmanCount + 1];
+            pacman[i * pacmanSpriteCount] = new Sprite(sheet, OFFSET, i * SIZE, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
+            pacman[i * pacmanSpriteCount + 1] = new Sprite(sheet, OFFSET + SIZE, i * SIZE, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
+            pacman[i * pacmanSpriteCount + 2] = new Sprite(sheet, OFFSET + 2 * SIZE, 0, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
+            pacman[i * pacmanSpriteCount + 3] = pacman[i * pacmanSpriteCount + 1];
         }
 
-        pacmanDeathSprites = new Sprite[11];
+        pacmanDeath = new Sprite[11];
         for (int i = 0; i < 11; i++) {
-            pacmanDeathSprites[i] = new Sprite(sheet, 455 + 48 + 16 * i, 0, 16, 16, 40, 40);
+            pacmanDeath[i] = new Sprite(sheet, OFFSET + (i + 3) * SIZE, 0, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
         }
 
-        hpSprite = new Sprite(sheet, 456 + 128, 16, 16, 16, 40, 40);
+        hp = new Sprite(sheet, OFFSET + 8 * SIZE + 1, SIZE, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
 
-        ghostSprites = new Sprite[32];
+        ghosts = new Sprite[32];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 8; j++) {
-                ghostSprites[i * 8 + j] = new Sprite(sheet, 455 + 16 * j, 64 + 16 * i, 16, 16, 40, 40);
+                ghosts[i * 8 + j] = new Sprite(sheet, OFFSET + j * SIZE, (i + 4) * SIZE, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
             }
+        }
+
+        ghostPower = new Sprite[4];
+        for (int i = 0; i < 4; i++) {
+            ghostPower[i] = new Sprite(sheet, OFFSET + (i + 8) * SIZE, 4 * SIZE, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
+        }
+
+        ghostDeath = new Sprite[4];
+        for (int i = 0; i < 4; i++) {
+            ghostDeath[i] = new Sprite(sheet, OFFSET + (i + 8) * SIZE, 5 * SIZE, SIZE, SIZE, DRAWSIZE, DRAWSIZE);
         }
     }
 

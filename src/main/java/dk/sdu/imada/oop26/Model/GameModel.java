@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel {
+    private GameState state = GameState.NORMAL;
+    private double powerDuration = 0;
+
     private Pacman pacman;
     private List<Ghost> ghosts;
     private Maze maze;
@@ -22,6 +25,13 @@ public class GameModel {
     }
 
     public void update(double dt) {
+        if (state == GameState.POWER) {
+            powerDuration -= dt;
+            if (powerDuration < 0) {
+                state = GameState.NORMAL;
+            }
+        }
+
         pacman.update(dt, maze);
 
         double x = pacman.getx() + 0.5;
@@ -34,7 +44,9 @@ public class GameModel {
         else if (maze.getTile(x, y) == Tile.PowerPellet) {
             score++;
             maze.emptyTile(x, y);
-            // Powerup
+            
+            state = GameState.POWER;
+            powerDuration = 10;
         }
 
         for (Ghost ghost : ghosts) {
@@ -43,11 +55,19 @@ public class GameModel {
         }
     }
 
+    public GameState getState() {
+        return state;
+    }
+
+    public double getPowerDuration() {
+        return powerDuration;
+    }
+
     public Maze getMaze() {
         return maze;
     }
 
-    public List<Ghost> getghosts() {
+    public List<Ghost> getGhosts() {
         return ghosts;
     }
 
