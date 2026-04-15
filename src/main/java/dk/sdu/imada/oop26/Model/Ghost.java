@@ -18,6 +18,30 @@ public abstract class Ghost extends MovingEntity {
 
     public abstract void update_direction(Pacman pacman, Maze maze);
 
+    public void goto_target(double targetX, double targetY, Maze maze) {
+        Direction opposite = Direction.oppositeDirection(getDirection());
+        double minDist = Double.POSITIVE_INFINITY;
+
+        for (Direction d : Direction.values()) {
+            if (d == Direction.NONE)
+                continue;
+            if (d == opposite)
+                continue;
+            double newx = Math.floor(x) + d.dx;
+            double newy = Math.floor(y) + d.dy;
+            if (maze.getTile(newx, newy) == Tile.Wall)
+                continue;
+
+            double xdiff = newx - targetX;
+            double ydiff = newy - targetY;
+            double dist = xdiff*xdiff + ydiff*ydiff;
+            if (dist < minDist) {
+                minDist = dist;
+                setWantedDirection(d);
+            }
+        }
+    }
+
     public GhostType gettype() {
         return type;
     }
