@@ -38,6 +38,12 @@ public abstract class MovingEntity {
                 newY = Math.round(newY);
                 break;
         }
+        if (newX <= -1) {
+            newX += Maze.MAZE_WIDTH;
+        }
+        if (newX >= Maze.MAZE_WIDTH) {
+            newX -= Maze.MAZE_WIDTH;
+        }
 
         if (!disallowedTiles.contains(maze.getTile(newX, newY)) &&
             !disallowedTiles.contains(maze.getTile(newX+1-1e-5, newY)) &&
