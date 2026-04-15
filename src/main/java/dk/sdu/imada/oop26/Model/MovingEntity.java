@@ -33,6 +33,12 @@ public abstract class MovingEntity {
                 newY = Math.round(newY);
                 break;
         }
+        if (newX <= -1) {
+            newX += Maze.MAZE_WIDTH;
+        }
+        if (newX >= Maze.MAZE_WIDTH) {
+            newX -= Maze.MAZE_WIDTH;
+        }
 
         if (maze.getTile(newX, newY) != Tile.Wall &&
             maze.getTile(newX+1-1e-5, newY) != Tile.Wall &&
