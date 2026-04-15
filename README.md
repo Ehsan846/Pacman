@@ -3,14 +3,14 @@
 # TODO
 
 # View
-[ ] Draw Score
+[x] Draw Score
 [ ] Sprite Factory
 
 # Model
 [ ] Pacman death
-[ ] Score
+[x] Score
 [ ] PowerPellet
-[ ] Ghost pathing - Chase
+[x] Ghost pathing - Chase
 [ ] Ghost pathing - Respawn
 [ ] Ghost pathing - Flee
 [ ] Ghost pathing - OPTIONAL: Scatter

@@ -1,27 +1,38 @@
 package dk.sdu.imada.oop26.Model;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Blinky extends Ghost {
     public Blinky() {
         type = GhostType.BLINKY;
         x = 13.5;
         y = 11;
+        x = 15;
+        y = 23;
     }
+
     public void update_direction(Pacman pacman, Maze maze) {
-        double xdiff = x - pacman.x;
-        double ydiff = y - pacman.y;
-        if (Math.abs(xdiff) > Math.abs(ydiff)) {
-            if (xdiff < 0) {
-                setWantedDirection(Direction.RIGHT);
-            } else if (xdiff > 0) {
-                setWantedDirection(Direction.LEFT);
-            }
-        } else {
-            if (ydiff < 0) {
-                setWantedDirection(Direction.DOWN);
-            } else if (ydiff > 0) {
-                setWantedDirection(Direction.UP);
+        Direction opposite = Direction.oppositeDirection(getDirection());
+        double minDist = Double.POSITIVE_INFINITY;
+
+        for (Direction d : Direction.values()) {
+            if (d == Direction.NONE)
+                continue;
+            if (d == opposite)
+                continue;
+            double newx = Math.floor(x) + d.dx;
+            double newy = Math.floor(y) + d.dy;
+
+            if (maze.getTile(newx, newy) != Tile.Wall) {
+                double xdiff = newx - pacman.x;
+                double ydiff = newy - pacman.y;
+                double dist = xdiff*xdiff + ydiff*ydiff;
+
+                if (dist < minDist) {
+                    minDist = dist;
+                    setWantedDirection(d);
+                }
             }
         }
     }
-
 }

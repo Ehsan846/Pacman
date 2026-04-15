@@ -17,14 +17,16 @@ public abstract class MovingEntity {
         if (move(wantedDirection, dt, maze)) {
             direction = wantedDirection;
         } else {
-            move(direction, dt, maze);
+            if (!move(direction, dt, maze)){
+                x = Math.round(x);
+                y = Math.round(y);
+            }
         }
     }
 
     private boolean move(Direction direction, double dt, Maze maze) {
         double newX = x + speed * dt * direction.dx;
         double newY = y + speed * dt * direction.dy;
-
 
         switch (direction) {
             case UP:
@@ -47,6 +49,9 @@ public abstract class MovingEntity {
         }
         return false;
     }
+
+
+
 
     public double getx() {
         return x;
