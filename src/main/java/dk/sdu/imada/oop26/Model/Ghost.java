@@ -1,5 +1,6 @@
 package dk.sdu.imada.oop26.Model;
 
+
 public abstract class Ghost extends MovingEntity {
     protected boolean alive = true;
     protected GhostType type;

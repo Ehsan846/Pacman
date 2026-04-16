@@ -56,9 +56,6 @@ public abstract class MovingEntity {
         return false;
     }
 
-
-
-
     public double getx() {
         return x;
     }

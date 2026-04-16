@@ -15,6 +15,11 @@ public enum Direction {
         this.dy = dy;
     }
 
+    private static final Direction[] directions = new Direction[]{UP, DOWN, LEFT, RIGHT};
+    public static Direction[] getDirections() {
+        return directions;
+    }
+
     public static Direction oppositeDirection(Direction d) {
         switch (d) {
             case UP:
