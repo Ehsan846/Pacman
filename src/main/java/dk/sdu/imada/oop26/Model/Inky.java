@@ -37,11 +37,23 @@ public class Inky extends Ghost {
         finalVectorX = Math.max(0, Math.min(maze.getWidth()-1, finalVectorX));
         finalVectorY = Math.max(0, Math.min(maze.getHeight()-1, finalVectorY));
 
+        // Find nearest non-wall tile to target
+        while (maze.getTile(finalVectorX, finalVectorY) == Tile.Wall) {
+            int dx = finalVectorX - (int)x;
+            int dy = finalVectorY - (int)y;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                finalVectorX -= Integer.signum(dx);
+            } else {
+                finalVectorY -= Integer.signum(dy);
+            }
+        }
+
         setWantedDirection(AStar.astar(maze, (int)x, (int)y, finalVectorX, finalVectorY));
+
 	
-	//Problem: it gets stuck for some reason,
-	//Cause: I suspect that its detecting walls. 
-	//Solution: implement behaviour for when detecting wall
+        //Problem: it gets stuck for some reason,
+        //Cause: I suspect that its detecting walls. 
+        //Solution: implement behaviour for when detecting wall
 
         last_x = (int)x;
         last_y = (int)y;
