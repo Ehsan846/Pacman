@@ -16,10 +16,13 @@ public class GameModel {
         pacman = new Pacman();
 
         ghosts = new ArrayList<Ghost>(4);
-        ghosts.add(new Inky());
         ghosts.add(new Pinky());
         ghosts.add(new Clyde());
-        ghosts.add(new Blinky());
+
+	Blinky blinky = new Blinky(); 
+        ghosts.add(blinky);
+
+        ghosts.add(new Inky(blinky));
 
         maze = new Maze();
     }
