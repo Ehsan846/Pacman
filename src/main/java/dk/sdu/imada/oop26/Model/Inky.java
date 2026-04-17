@@ -1,4 +1,5 @@
 package dk.sdu.imada.oop26.Model;
+        //Problem: gets stuck in some corners? Also moves in the oppisite direction without hitting the wall. 
 
 public class Inky extends Ghost {
     private int last_x;
@@ -49,11 +50,6 @@ public class Inky extends Ghost {
         }
 
         setWantedDirection(AStar.astar(maze, (int)x, (int)y, finalVectorX, finalVectorY));
-
-	
-        //Problem: it gets stuck for some reason,
-        //Cause: I suspect that its detecting walls. 
-        //Solution: implement behaviour for when detecting wall
 
         last_x = (int)x;
         last_y = (int)y;
