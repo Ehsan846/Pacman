@@ -13,8 +13,6 @@ public class Inky extends Ghost {
 
     @Override
     public void update_direction(Pacman pacman, Maze maze) {
-        if (!should_update(pacman)) return;
-
         int blinkyX = (int)blinky.getx();
         int blinkyY = (int)blinky.gety();
 
@@ -29,8 +27,8 @@ public class Inky extends Ghost {
         int finalVectorY = blinkyY + vectorY * 2;
 
         // stay inside the map
-        finalVectorX = Math.max(0, Math.min(maze.getWidth()-1, finalVectorX));
-        finalVectorY = Math.max(0, Math.min(maze.getHeight()-1, finalVectorY));
+        finalVectorX = Math.max(0, Math.min(maze.MAZE_WIDTH-1, finalVectorX));
+        finalVectorY = Math.max(0, Math.min(maze.MAZE_HEIGHT-1, finalVectorY));
 
         // Find nearest non-wall tile to target
         while (maze.getTile(finalVectorX, finalVectorY) == Tile.Wall) {

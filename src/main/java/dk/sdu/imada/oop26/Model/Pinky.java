@@ -10,15 +10,13 @@ public class Pinky extends Ghost {
 
     @Override
     public void update_direction(Pacman pacman, Maze maze) {
-        if (!should_update(pacman)) return;
-
         Direction pacDir = pacman.getDirection();
         int aheadX = (int)pacman.getx() + 4 * pacDir.dx;
         int aheadY = (int)pacman.gety() + 4 * pacDir.dy;
 
         // stay inside the map
-        aheadX = Math.max(0, Math.min(maze.getWidth()-1, aheadX));
-        aheadY = Math.max(0, Math.min(maze.getHeight()-1, aheadY));
+        aheadX = Math.max(0, Math.min(maze.MAZE_WIDTH-1, aheadX));
+        aheadY = Math.max(0, Math.min(maze.MAZE_HEIGHT-1, aheadY));
 
         // Find nearest non-wall tile to target
         while (maze.getTile(aheadX, aheadY) == Tile.Wall) {

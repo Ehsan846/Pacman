@@ -53,7 +53,7 @@ public class GameModel {
         }
 
         for (Ghost ghost : ghosts) {
-            ghost.update_direction(pacman, maze);
+            ghost.update(pacman, maze);
             ghost.update(dt, maze);
         }
     }

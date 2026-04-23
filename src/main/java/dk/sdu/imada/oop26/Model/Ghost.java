@@ -26,20 +26,21 @@ public abstract class Ghost extends MovingEntity {
 
     public abstract void update_direction(Pacman pacman, Maze maze);
 
-    public boolean should_update(Pacman pacman) {
+    public void update(Pacman pacman, Maze maze) {
         if ((int)x == last_x && (int)y == last_y && (int)pacman.x == last_px && pacman.y == last_py)
-            return false;
+            return;
+        update_direction(pacman, maze);
         last_x = (int)x;
         last_y = (int)y;
         last_px = (int)pacman.x;
         last_py = (int)pacman.y;
-        return true;
     }
 
-    public void goto_target(double targetX, double targetY, Maze maze) {
+    public Direction goto_target(double targetX, double targetY, Maze maze) {
         Direction opposite = Direction.oppositeDirection(getDirection());
         double minDist = Double.POSITIVE_INFINITY;
 
+        Direction r = Direction.NONE;
         for (Direction d : Direction.values()) {
             if (d == Direction.NONE)
                 continue;
@@ -55,9 +56,11 @@ public abstract class Ghost extends MovingEntity {
             double dist = xdiff*xdiff + ydiff*ydiff;
             if (dist < minDist) {
                 minDist = dist;
-                setWantedDirection(d);
+                r = d;
             }
         }
+
+        return r;
     }
 
     public GhostType gettype() {

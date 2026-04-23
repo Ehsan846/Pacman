@@ -9,11 +9,11 @@ public class Clyde extends Ghost {
 
     @Override
     public void update_direction(Pacman pacman, Maze maze) {
-        if (!should_update(pacman)) return;
+        double dx = pacman.getx() - x;
+        double dy = pacman.gety() - y;
+        double dist = Math.sqrt(dx*dx+dy*dy);
 
-        int dist = (int)Math.sqrt(Math.pow(pacman.getx() - x, 2) + Math.pow(pacman.gety() - y, 2));
-
-        if(dist <= 8){
+        if (dist <= 8) {
             setWantedDirection(AStar.astar(maze, (int)x, (int)y, 1, 1));
         } else  {
             setWantedDirection(AStar.astar(maze, (int)x, (int)y, (int)pacman.x, (int)pacman.y));

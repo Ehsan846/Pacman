@@ -64,14 +64,4 @@ public class Maze {
             return;
         tiles[(int)x][(int)y] = Tile.Empty;
     }
-
-    public int  getWidth(){
-    return MAZE_WIDTH;
-    }
-
-
-   public int getHeight(){
-   return MAZE_HEIGHT;    
-   
-   }
 }
