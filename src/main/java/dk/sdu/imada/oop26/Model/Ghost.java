@@ -5,6 +5,11 @@ public abstract class Ghost extends MovingEntity {
     protected boolean alive = true;
     protected GhostType type;
 
+    private int last_x;
+    private int last_y;
+    private int last_px;
+    private int last_py;
+
     public Ghost() {
         speed = 8;
     }
@@ -18,7 +23,18 @@ public abstract class Ghost extends MovingEntity {
         super.update(dt, maze);
     }
 
+
     public abstract void update_direction(Pacman pacman, Maze maze);
+
+    public boolean should_update(Pacman pacman) {
+        if ((int)x == last_x && (int)y == last_y && (int)pacman.x == last_px && pacman.y == last_py)
+            return false;
+        last_x = (int)x;
+        last_y = (int)y;
+        last_px = (int)pacman.x;
+        last_py = (int)pacman.y;
+        return true;
+    }
 
     public void goto_target(double targetX, double targetY, Maze maze) {
         Direction opposite = Direction.oppositeDirection(getDirection());

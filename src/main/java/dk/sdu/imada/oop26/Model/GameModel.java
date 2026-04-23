@@ -19,7 +19,7 @@ public class GameModel {
         ghosts.add(new Pinky());
         ghosts.add(new Clyde());
 
-	Blinky blinky = new Blinky(); 
+    	Blinky blinky = new Blinky();
         ghosts.add(blinky);
 
         ghosts.add(new Inky(blinky));
@@ -47,7 +47,7 @@ public class GameModel {
         else if (maze.getTile(x, y) == Tile.PowerPellet) {
             score++;
             maze.emptyTile(x, y);
-            
+
             state = GameState.POWER;
             powerDuration = 10;
         }
