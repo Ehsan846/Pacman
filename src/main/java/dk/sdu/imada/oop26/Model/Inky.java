@@ -13,6 +13,11 @@ public class Inky extends Ghost {
 
     @Override
     public void update_direction(Pacman pacman, Maze maze) {
+        if (!alive) {
+            super.update_direction(pacman, maze);
+            return;
+        }
+
         int blinkyX = (int)blinky.getx();
         int blinkyY = (int)blinky.gety();
 
@@ -41,6 +46,6 @@ public class Inky extends Ghost {
             }
         }
 
-        setWantedDirection(AStar.astar(maze, (int)x, (int)y, finalVectorX, finalVectorY));
+        setWantedDirection(AStar.astar(maze, (int)x, (int)y, finalVectorX, finalVectorY, getDirection()));
     }
 }

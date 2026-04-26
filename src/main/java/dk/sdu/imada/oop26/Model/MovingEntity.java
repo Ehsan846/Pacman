@@ -7,7 +7,7 @@ import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
 
 public abstract class MovingEntity {
-    protected double x, y, speed;
+    protected double x, y, lastX, lastY, speed;
     private Direction direction = Direction.NONE;
     private Direction wantedDirection = direction;
 
@@ -24,6 +24,13 @@ public abstract class MovingEntity {
         }
     }
 
+    private double snapIfClose(double last, double value) {
+        final double rounded = Math.round(value);
+        if (Math.abs((int)last - (int)value) != 0)
+            return rounded;
+        return value;
+    }
+
     private boolean move(Direction direction, double dt, Maze maze) {
         double newX = x + speed * dt * direction.dx;
         double newY = y + speed * dt * direction.dy;
@@ -31,24 +38,26 @@ public abstract class MovingEntity {
         switch (direction) {
             case UP:
             case DOWN:
-                newX = Math.round(newX);
+                newX = snapIfClose(lastX, newX);
                 break;
             case LEFT:
             case RIGHT:
-                newY = Math.round(newY);
+                newY = snapIfClose(lastY, newY);
                 break;
         }
-        if (newX <= -1) {
-            newX += Maze.MAZE_WIDTH;
-        }
-        if (newX >= Maze.MAZE_WIDTH) {
-            newX -= Maze.MAZE_WIDTH;
-        }
 
-        if (!disallowedTiles.contains(maze.getTile(newX, newY)) &&
-            !disallowedTiles.contains(maze.getTile(newX+1-1e-5, newY)) &&
-            !disallowedTiles.contains(maze.getTile(newX, newY+1-1e-5)) &&
-            !disallowedTiles.contains(maze.getTile(newX+1-1e-5, newY+1-1e-5))) {
+        if (newX <= -1)
+            newX += Maze.MAZE_WIDTH;
+        else if (newX >= Maze.MAZE_WIDTH)
+            newX -= Maze.MAZE_WIDTH;
+
+        final double offset = 0.499;
+        if (!disallowedTiles.contains(maze.getTile(newX - offset, newY - offset)) &&
+            !disallowedTiles.contains(maze.getTile(newX + offset, newY - offset)) &&
+            !disallowedTiles.contains(maze.getTile(newX - offset, newY + offset)) &&
+            !disallowedTiles.contains(maze.getTile(newX + offset, newY + offset))) {
+            lastX = x;
+            lastY = y;
             x = newX;
             y = newY;
             return true;
@@ -74,9 +83,9 @@ public abstract class MovingEntity {
     }
 
     public void setWantedDirection(Direction direction) {
-        wantedDirection = direction;
+        if (direction != Direction.NONE)
+            wantedDirection = direction;
     }
-
 
     public void setX(double x) { this.x = x; }
     public void setY(double y) { this.y = y; }

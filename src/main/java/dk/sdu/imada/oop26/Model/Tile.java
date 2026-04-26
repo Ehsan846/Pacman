@@ -5,5 +5,6 @@ public enum Tile {
     Wall,
     Gate,
     Pellet,
-    PowerPellet
+    PowerPellet,
+    GhostRespawn
 }

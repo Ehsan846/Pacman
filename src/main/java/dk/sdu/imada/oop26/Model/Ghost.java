@@ -10,21 +10,30 @@ public abstract class Ghost extends MovingEntity {
     private int last_px;
     private int last_py;
 
+    public static final int DEFAULT_SPEED = 8;
+    public static final int SLOWED_SPEED = 4;
+    public static final int DEAD_SPEED = 12;
+
     public Ghost() {
-        speed = 8;
+        speed = DEFAULT_SPEED;
     }
 
     @Override
     public void update(double dt, Maze maze) {
-        if (y == 14 && (x <= 6 || x >= Maze.MAZE_WIDTH-6))
-            speed = 4;
-        else
-            speed = 8;
+        if (alive) {
+            if (maze.inGhostSlowZone(x, y))
+                speed = SLOWED_SPEED;
+            else
+                speed = DEFAULT_SPEED;
+        }
+        
         super.update(dt, maze);
     }
 
-
-    public abstract void update_direction(Pacman pacman, Maze maze);
+    public void update_direction(Pacman pacman, Maze maze) {
+        // Default target respawnpoint
+        setWantedDirection(AStar.astar(maze, (int)x, (int)y, maze.getRespawnX(), maze.getRespawnY(), getDirection()));
+    }
 
     public void update(Pacman pacman, Maze maze) {
         if ((int)x == last_x && (int)y == last_y && (int)pacman.x == last_px && pacman.y == last_py)
@@ -37,6 +46,13 @@ public abstract class Ghost extends MovingEntity {
     }
 
     public Direction goto_target(double targetX, double targetY, Maze maze) {
+        /*
+        
+        
+        Bliver den stadig brugt?
+        
+        
+        */
         Direction opposite = Direction.oppositeDirection(getDirection());
         double minDist = Double.POSITIVE_INFINITY;
 
@@ -61,6 +77,16 @@ public abstract class Ghost extends MovingEntity {
         }
 
         return r;
+    }
+
+    public void eat() {
+        alive = false;
+        speed = DEAD_SPEED;
+    }
+
+    public void respawn() {
+        alive = true;
+        speed = DEFAULT_SPEED;
     }
 
     public GhostType gettype() {

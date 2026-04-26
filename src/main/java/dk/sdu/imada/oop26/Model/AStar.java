@@ -50,7 +50,7 @@ public class AStar {
         return Direction.NONE;
     }
 
-    protected static Direction astar(Maze maze, int startX, int startY, int targetX, int targetY) {
+    protected static Direction astar(Maze maze, int startX, int startY, int targetX, int targetY, Direction facingDirection) {
         if (maze.getTile(startX, startY) == Tile.Wall)
             return Direction.NONE;
         if (maze.getTile(targetX, targetY) == Tile.Wall)
@@ -71,6 +71,8 @@ public class AStar {
         fScore.put(start, 0);
         openSet.offer(start);
 
+        final Direction oppositeDirection = Direction.oppositeDirection(facingDirection);
+
         while (openSet.size() > 0) {
             Entry<Integer, Integer> current = openSet.poll();
             if (current.equals(target)) {
@@ -78,6 +80,9 @@ public class AStar {
             }
 
             for (Direction d : Direction.getDirections()) {
+                if (current.equals(start) && d == oppositeDirection)
+                    continue;
+
                 int neighborx = getx(current) + d.dx;
                 int neighbory = gety(current) + d.dy;
                 if (neighborx < 0 || neighborx >= Maze.MAZE_WIDTH || neighbory < 0 || neighbory >= Maze.MAZE_HEIGHT)

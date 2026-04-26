@@ -11,6 +11,9 @@ public class Maze {
 
     private Tile[][] tiles = new Tile[MAZE_WIDTH][MAZE_HEIGHT];
 
+    private int ghostRespawnX = 0;
+    private int ghostRespawnY = 0;
+
     Maze() {
         try {
             readFile("map.txt");
@@ -39,6 +42,11 @@ public class Maze {
                     case 'o':
                         tiles[x][y] = Tile.PowerPellet;
                         break;
+                    case 'r':
+                        tiles[x][y] = Tile.GhostRespawn;
+                        ghostRespawnX = x;
+                        ghostRespawnY = y;
+                        break;
                     default:
                     case ' ':
                         tiles[x][y] = Tile.Empty;
@@ -52,16 +60,35 @@ public class Maze {
         reader.close();
     }
 
-    public Tile getTile(double x, double y) {
-        if (x < 0 || x >= MAZE_WIDTH || y < 0 || y >= MAZE_HEIGHT)
+    public Tile getTile(double doubleX, double doubleY) {
+        final int x = (int)Math.round(doubleX);
+        final int y = (int)Math.round(doubleY);
+        if (x < 0 || x > MAZE_WIDTH - 1 || y < 0 || y > MAZE_HEIGHT - 1)
             return Tile.Empty;
-        return tiles[(int)x][(int)y];
+        return tiles[x][y];
     }
 
 
-    public void emptyTile(double x, double y) {
-        if (x < 0 || x >= MAZE_WIDTH || y < 0 || y >= MAZE_HEIGHT)
+    public void emptyTile(double doubleX, double doubleY) {
+        final int x = (int)Math.round(doubleX);
+        final int y = (int)Math.round(doubleY);
+        if (x < 0 || x > MAZE_WIDTH - 1 || y < 0 || y > MAZE_HEIGHT - 1)
             return;
-        tiles[(int)x][(int)y] = Tile.Empty;
+        tiles[x][y] = Tile.Empty;
+    }
+
+    public boolean inGhostSlowZone(double x, double y) {
+        return (
+            y == 14 && (x <= 6 || x >= Maze.MAZE_WIDTH-6) // Portal area
+            || getTile(x, y) == Tile.Gate // Ghost entrance
+        );
+    }
+
+    public int getRespawnX() {
+        return ghostRespawnX;
+    }
+
+    public int getRespawnY() {
+        return ghostRespawnY;
     }
 }
