@@ -7,7 +7,7 @@ import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
 
 public abstract class MovingEntity {
-    protected double x, y, lastX, lastY, speed;
+    protected double x, y, speed;
     private Direction direction = Direction.NONE;
     private Direction wantedDirection = direction;
 
@@ -49,8 +49,6 @@ public abstract class MovingEntity {
             !disallowedTiles.contains(maze.getTile(newX + offset, newY)) &&
             !disallowedTiles.contains(maze.getTile(newX, newY + offset)) &&
             !disallowedTiles.contains(maze.getTile(newX + offset, newY + offset))) {
-            lastX = x;
-            lastY = y;
             x = newX;
             y = newY;
             return true;
