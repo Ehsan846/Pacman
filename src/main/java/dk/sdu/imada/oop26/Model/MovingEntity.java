@@ -2,6 +2,9 @@ package dk.sdu.imada.oop26.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Arrays;
+import java.util.AbstractMap.SimpleEntry;
 
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
@@ -24,6 +27,18 @@ public abstract class MovingEntity {
         }
     }
 
+    public List<Entry<Double, Double>> getTouchingTiles(double x, double y) {
+        final double offset = 1 - 1e-5;
+        List<Entry<Double, Double>> list = Arrays.asList(
+            new SimpleEntry(x, y),
+            new SimpleEntry(x + offset, y),
+            new SimpleEntry(x, y + offset),
+            new SimpleEntry(x + offset, y + offset));
+        return list;
+    }
+
+
+
     private boolean move(Direction direction, double dt, Maze maze) {
         double newX = x + speed * dt * direction.dx;
         double newY = y + speed * dt * direction.dy;
@@ -44,11 +59,8 @@ public abstract class MovingEntity {
         else if (newX >= Maze.MAZE_WIDTH)
             newX -= Maze.MAZE_WIDTH;
 
-        final double offset = 1 - 1e-5;
-        if (!disallowedTiles.contains(maze.getTile(newX, newY)) &&
-            !disallowedTiles.contains(maze.getTile(newX + offset, newY)) &&
-            !disallowedTiles.contains(maze.getTile(newX, newY + offset)) &&
-            !disallowedTiles.contains(maze.getTile(newX + offset, newY + offset))) {
+        if (!getTouchingTiles(newX, newY).stream()
+                .anyMatch(e -> disallowedTiles.contains(maze.getTile(e.getKey(), e.getValue())))) {
             x = newX;
             y = newY;
             return true;

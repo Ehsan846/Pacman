@@ -61,7 +61,7 @@ public class Maze {
     }
 
     public Tile getTile(double x, double y) {
-        if (x < 0 || x > MAZE_WIDTH - 1 || y < 0 || y > MAZE_HEIGHT - 1)
+        if (x < 0 || x >= MAZE_WIDTH || y < 0 || y >= MAZE_HEIGHT)
             return Tile.Empty;
         return tiles[(int)x][(int)y];
     }

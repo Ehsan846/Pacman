@@ -26,7 +26,7 @@ public abstract class Ghost extends MovingEntity {
             else
                 speed = DEFAULT_SPEED;
         }
-        
+
         super.update(dt, maze);
     }
 
@@ -47,11 +47,11 @@ public abstract class Ghost extends MovingEntity {
 
     public Direction goto_target(double targetX, double targetY, Maze maze) {
         /*
-        
-        
+
+
         Bliver den stadig brugt?
-        
-        
+
+
         */
         Direction opposite = Direction.oppositeDirection(getDirection());
         double minDist = Double.POSITIVE_INFINITY;

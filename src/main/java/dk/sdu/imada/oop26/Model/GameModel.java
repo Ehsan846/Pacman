@@ -2,6 +2,7 @@ package dk.sdu.imada.oop26.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 public class GameModel {
     private GameState state = GameState.NORMAL;
@@ -42,16 +43,20 @@ public class GameModel {
         final double pacmanX = pacman.getx();
         final double pacmanY = pacman.gety();
 
-        if (maze.getTile(pacmanX, pacmanY) == Tile.Pellet) {
-            maze.emptyTile(pacmanX, pacmanY);
-            score++;
-        }
-        else if (maze.getTile(pacmanX, pacmanY) == Tile.PowerPellet) {
-            score++;
-            maze.emptyTile(pacmanX, pacmanY);
+        for (Entry<Double, Double> e : pacman.getTouchingTiles(pacmanX, pacmanY)) {
+            double x = e.getKey();
+            double y = e.getValue();
+            Tile tile = maze.getTile(x, y);
+            if (tile == Tile.Pellet) {
+                maze.emptyTile(x, y);
+                score++;
+            } else if (tile == Tile.PowerPellet) {
+                score++;
+                maze.emptyTile(x, y);
 
-            state = GameState.POWER;
-            powerDuration = 10;
+                state = GameState.POWER;
+                powerDuration = 10;
+            }
         }
 
         for (Ghost ghost : ghosts) {
