@@ -24,13 +24,6 @@ public abstract class MovingEntity {
         }
     }
 
-    private double snapIfClose(double last, double value) {
-        final double rounded = Math.round(value);
-        if (Math.abs((int)last - (int)value) != 0)
-            return rounded;
-        return value;
-    }
-
     private boolean move(Direction direction, double dt, Maze maze) {
         double newX = x + speed * dt * direction.dx;
         double newY = y + speed * dt * direction.dy;
@@ -38,11 +31,11 @@ public abstract class MovingEntity {
         switch (direction) {
             case UP:
             case DOWN:
-                newX = snapIfClose(lastX, newX);
+                newX = Math.round(newX);
                 break;
             case LEFT:
             case RIGHT:
-                newY = snapIfClose(lastY, newY);
+                newY = Math.round(newY);
                 break;
         }
 
@@ -51,10 +44,10 @@ public abstract class MovingEntity {
         else if (newX >= Maze.MAZE_WIDTH)
             newX -= Maze.MAZE_WIDTH;
 
-        final double offset = 0.499;
-        if (!disallowedTiles.contains(maze.getTile(newX - offset, newY - offset)) &&
-            !disallowedTiles.contains(maze.getTile(newX + offset, newY - offset)) &&
-            !disallowedTiles.contains(maze.getTile(newX - offset, newY + offset)) &&
+        final double offset = 1 - 1e-5;
+        if (!disallowedTiles.contains(maze.getTile(newX, newY)) &&
+            !disallowedTiles.contains(maze.getTile(newX + offset, newY)) &&
+            !disallowedTiles.contains(maze.getTile(newX, newY + offset)) &&
             !disallowedTiles.contains(maze.getTile(newX + offset, newY + offset))) {
             lastX = x;
             lastY = y;

@@ -60,21 +60,17 @@ public class Maze {
         reader.close();
     }
 
-    public Tile getTile(double doubleX, double doubleY) {
-        final int x = (int)Math.round(doubleX);
-        final int y = (int)Math.round(doubleY);
+    public Tile getTile(double x, double y) {
         if (x < 0 || x > MAZE_WIDTH - 1 || y < 0 || y > MAZE_HEIGHT - 1)
             return Tile.Empty;
-        return tiles[x][y];
+        return tiles[(int)x][(int)y];
     }
 
 
-    public void emptyTile(double doubleX, double doubleY) {
-        final int x = (int)Math.round(doubleX);
-        final int y = (int)Math.round(doubleY);
+    public void emptyTile(double x, double y) {
         if (x < 0 || x > MAZE_WIDTH - 1 || y < 0 || y > MAZE_HEIGHT - 1)
             return;
-        tiles[x][y] = Tile.Empty;
+        tiles[(int)x][(int)y] = Tile.Empty;
     }
 
     public boolean inGhostSlowZone(double x, double y) {
