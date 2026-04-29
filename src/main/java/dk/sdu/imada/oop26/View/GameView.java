@@ -35,6 +35,7 @@ public class GameView {
 
 
     private int frame = 0;
+    private int firstDeathFrame = -1;
     private double total_time;
 
 
@@ -80,7 +81,7 @@ public class GameView {
         gc.fillRect(0, 0, WIDTH, HEIGHT);
         backgroundImage.draw(gc, 0, 0);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < model.gethp() - 1; i++) {
             Sprites.hp.draw(gc, 75 + i * Sprites.DRAWSIZE, HEIGHT - 20);
         }
     }
@@ -101,14 +102,41 @@ public class GameView {
     }
 
     private void drawPacman(GameModel model) {
-        final int rotationOffset = 4 * Sprites.getRotationOffset(model.getDirection());
+        if (model.pacmanAlive()) {
+            if (model.pacmanImmune() && (frame % 10 < 5))
+                return;
 
-        Sprites.pacman[(frame / 3) % 4 + rotationOffset].draw(
-           gc, model.getx() * PPT, model.gety() * PPT
-        );
+            final int rotationOffset = 4 * Sprites.getRotationOffset(model.getDirection());
+            
+            Sprites.pacman[(frame / 3) % 4 + rotationOffset].draw(
+               gc, model.getx() * PPT, model.gety() * PPT
+            );
+
+            firstDeathFrame = -1;
+        } else {
+            if (firstDeathFrame < 0) {
+                firstDeathFrame = frame;
+            }
+
+            int index = ((frame - firstDeathFrame - 50) / 10);
+            if (index > 10)
+                return;
+            if (index < 0) {
+                Sprites.pacman[2].draw(
+                    gc, model.getx() * PPT, model.gety() * PPT
+                );
+            } else {
+                Sprites.pacmanDeath[index].draw(
+                    gc, model.getx() * PPT, model.gety() * PPT
+                );
+            }
+        }
     }
 
     private void drawGhosts(GameModel model) {
+        if (firstDeathFrame > 0 && frame - firstDeathFrame > 50)
+            return;
+        
         for (Ghost ghost : model.getGhosts()) {
             final int rotationOffset = Sprites.getRotationOffset(ghost.getDirection());
             final int spriteOffset = Sprites.getGhostOffset(ghost.gettype());

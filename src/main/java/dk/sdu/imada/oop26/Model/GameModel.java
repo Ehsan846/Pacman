@@ -6,7 +6,8 @@ import java.util.Map.Entry;
 
 public class GameModel {
     private GameState state = GameState.NORMAL;
-    private double powerDuration = 0;
+    private double stateDuration = 0;
+    private int hp = 5;
 
     private Pacman pacman;
     private List<Ghost> ghosts;
@@ -29,21 +30,13 @@ public class GameModel {
     }
 
     public void update(double dt) {
-        if (state == GameState.POWER) {
-            powerDuration -= dt;
-            if (powerDuration < 0) {
-                state = GameState.NORMAL;
-            }
-        } else if (state == GameState.FINISHED) {
+        if (!handleState(dt)) {
             return;
         }
 
         pacman.update(dt, maze);
 
-        final double pacmanX = pacman.getx();
-        final double pacmanY = pacman.gety();
-
-        for (Entry<Double, Double> e : pacman.getTouchingTiles(pacmanX, pacmanY)) {
+        for (Entry<Double, Double> e : pacman.getTouchingTiles(pacman.getx(), pacman.gety())) {
             double x = e.getKey();
             double y = e.getValue();
             Tile tile = maze.getTile(x, y);
@@ -55,7 +48,7 @@ public class GameModel {
                 maze.emptyTile(x, y);
 
                 state = GameState.POWER;
-                powerDuration = 10;
+                stateDuration = 10;
             }
         }
 
@@ -63,24 +56,56 @@ public class GameModel {
             ghost.update(pacman, maze);
             ghost.update(dt, maze);
 
-            final double ghostX = ghost.getx();
-            final double ghostY = ghost.gety();
-
             if (ghost.isAlive()) {
-                if (pacmanX < ghostX + 1 && pacmanX > ghostX - 1
-                    && pacmanY < ghostY + 1 && pacmanY > ghostY - 1) {
-                    if (state == GameState.POWER) {
-                        ghost.eat();
-                    } else {
-                        // -1 hp, hp = 0 => state = GameState.FINISHED;
-                    }
-                }
+                checkGhostCollission(ghost);
             } else {
-                if (maze.getTile(ghostX, ghostY) == Tile.GhostRespawn) {
+                if (maze.getTile(ghost.getx(), ghost.gety()) == Tile.GhostRespawn) {
                     ghost.respawn();
                 }
             }
         }
+    }
+
+    private void pacmanDeath() {
+        if (--hp < 1) {
+            state = GameState.FINISHED;
+            return;
+        }
+
+        state = GameState.IMMUNE;
+        stateDuration = 2;
+    }
+
+    private void checkGhostCollission(Ghost ghost) {
+        final double pacmanX = pacman.getx();
+        final double pacmanY = pacman.gety();
+        final double ghostX = ghost.getx();
+        final double ghostY = ghost.gety();
+
+        if (pacmanX < ghostX + 1.5 && pacmanX > ghostX - 1.5
+            && pacmanY < ghostY + 1.5 && pacmanY > ghostY - 1.5) {
+            if (state == GameState.POWER) {
+                ghost.eat();
+                score++;
+            } else if (state != GameState.IMMUNE ) {
+                pacmanDeath();
+            }
+        }
+    }
+
+    // Returns false when dead/finished
+    private boolean handleState(double dt) {
+        if (state == GameState.FINISHED)
+            return false;
+
+        if (state == GameState.NORMAL)
+            return true;
+
+        stateDuration -= dt;
+        if (stateDuration <= 0)
+            state = GameState.NORMAL;
+        
+        return true;
     }
 
     public GameState getState() {
@@ -88,7 +113,15 @@ public class GameModel {
     }
 
     public double getPowerDuration() {
-        return powerDuration;
+        return stateDuration;
+    }
+
+    public boolean pacmanAlive() {
+        return state != GameState.FINISHED;
+    }
+
+    public boolean pacmanImmune() {
+        return state == GameState.IMMUNE;
     }
 
     public Maze getMaze() {
@@ -109,6 +142,10 @@ public class GameModel {
 
     public int getScore() {
         return score;
+    }
+
+    public int gethp() {
+        return hp;
     }
 
     public Direction getDirection() {
