@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 public class GameModel implements Subject {
     private GameState state = GameState.NORMAL;
     private double stateDuration = 0;
-    private int hp = 2;
+    private int hp = 5;
 
     private Pacman pacman;
     private List<Ghost> ghosts;
@@ -45,10 +45,10 @@ public class GameModel implements Subject {
             double y = e.getValue();
             Tile tile = maze.getTile(x, y);
             // pacman ignore pellet
-            if (tile == Tile.Pellet && state != GameState.IMMUNE) {
+            if (tile == Tile.Pellet) {
                 maze.emptyTile(x, y);
                 score++;
-            } else if (tile == Tile.PowerPellet) {
+            } else if (tile == Tile.PowerPellet && state != GameState.IMMUNE ) {
                 score++;
                 maze.emptyTile(x, y);
 
@@ -83,9 +83,6 @@ public class GameModel implements Subject {
 
         state = GameState.IMMUNE;
         stateDuration = 2;
-
-        for (Ghost ghost : ghosts)
-            ghost.scared();
     }
 
     private void checkGhostCollission(Ghost ghost) {
