@@ -25,7 +25,7 @@ public abstract class Ghost extends MovingEntity {
             speed = DEFAULT_SPEED;
         } else if (state == GhostState.SCARED) {
             speed = SLOWED_SPEED;
-        } else if (state == GhostState.SCARED) {
+        } else if (state == GhostState.DEAD) {
             speed = DEAD_SPEED;
         }
     }

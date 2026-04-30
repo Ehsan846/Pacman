@@ -4,7 +4,7 @@ public class Clyde extends Ghost {
     public Clyde() {
         type = GhostType.CLYDE;
         x = 15.5;
-        y = 14;
+        y = 14.1;
     }
 
     @Override
