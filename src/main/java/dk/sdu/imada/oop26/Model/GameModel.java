@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 public class GameModel implements Subject {
     private GameState state = GameState.NORMAL;
     private double stateDuration = 0;
-    private int hp = 5;
+    private int lives = 5;
 
     private Pacman pacman;
     private List<Ghost> ghosts;
@@ -33,6 +33,7 @@ public class GameModel implements Subject {
         maze = new Maze();
     }
 
+
     public void update(double dt) {
         if (!handleState(dt)) {
             return;
@@ -48,7 +49,7 @@ public class GameModel implements Subject {
             if (tile == Tile.Pellet) {
                 maze.emptyTile(x, y);
                 score++;
-            } else if (tile == Tile.PowerPellet && state != GameState.IMMUNE ) {
+            } else if (tile == Tile.PowerPellet) {
                 score++;
                 maze.emptyTile(x, y);
 
@@ -75,8 +76,23 @@ public class GameModel implements Subject {
         }
     }
 
+
+
+    private void resetGame(){
+        // Just redefine our stuff, since the old stuff no longer have a reference they are picked up by garbage collector
+        
+        pacman = new Pacman();
+        maze = new Maze();
+        ghosts = new ArrayList<Ghost>(4);
+        ghosts.add(new Pinky());          
+        ghosts.add(new Clyde());
+        Blinky blinky = new Blinky();
+        ghosts.add(blinky);
+        ghosts.add(new Inky(blinky));
+    }
+
     private void pacmanDeath() {
-        if (--hp < 1) {
+        if (--lives < 1) {
             state = GameState.FINISHED;
             return;
         }
@@ -104,8 +120,15 @@ public class GameModel implements Subject {
 
     // Returns false when dead/finished
     private boolean handleState(double dt) {
-        if (state == GameState.FINISHED)
+        if (state == GameState.FINISHED){
             return false;
+        }
+        
+        //all pellets eaten games done
+        if (maze.allPelletsEaten()){
+            resetGame();
+            return false;
+        }
 
         if (state == GameState.NORMAL)
             return true;
@@ -120,6 +143,7 @@ public class GameModel implements Subject {
 
         return true;
     }
+    
 
     public GameState getState() {
         return state;
@@ -158,7 +182,7 @@ public class GameModel implements Subject {
     }
 
     public int gethp() {
-        return hp;
+        return lives;
     }
 
     public Direction getDirection() {
@@ -185,3 +209,4 @@ public class GameModel implements Subject {
 		observers.forEach(o -> o.update(this, dt));
     }
 }
+

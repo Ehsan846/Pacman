@@ -87,4 +87,19 @@ public class Maze {
     public int getRespawnY() {
         return ghostRespawnY;
     }
+
+    public boolean allPelletsEaten(){
+        for(int i = 0; i < MAZE_WIDTH ; i++){
+            for(int j = 0; j < MAZE_HEIGHT; j++){
+                if(getTile(i, j) == Tile.Pellet || getTile(i, j) == Tile.PowerPellet){
+                    return false;
+                }
+                else{
+                }
+            }
+        }
+        
+        return true;
+
+    }
 }

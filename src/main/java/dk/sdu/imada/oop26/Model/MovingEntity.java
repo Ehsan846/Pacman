@@ -92,4 +92,9 @@ public abstract class MovingEntity {
 
     public void setX(double x) { this.x = x; }
     public void setY(double y) { this.y = y; }
+
+    // for new level
+    public void setSpeed(int newSpeed){
+        speed = newSpeed;
+    }
 }
