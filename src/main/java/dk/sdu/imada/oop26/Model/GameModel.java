@@ -53,6 +53,8 @@ public class GameModel implements Subject {
 
                 state = GameState.POWER;
                 stateDuration = 10;
+                for (Ghost ghost : ghosts)
+                    ghost.scared();
             }
         }
 
@@ -64,7 +66,11 @@ public class GameModel implements Subject {
                 checkGhostCollission(ghost);
             } else {
                 if (maze.getTile(ghost.getx(), ghost.gety()) == Tile.GhostRespawn) {
-                    ghost.respawn();
+                    if (state != GameState.POWER) {
+                        ghost.normal();
+                    } else {
+                        ghost.scared();
+                    }
                 }
             }
         }
@@ -108,9 +114,13 @@ public class GameModel implements Subject {
             return true;
 
         stateDuration -= dt;
-        if (stateDuration <= 0)
+        if (stateDuration <= 0) {
             state = GameState.NORMAL;
-        
+            for (Ghost ghost : ghosts)
+                ghost.normal();
+
+        }
+
         return true;
     }
 

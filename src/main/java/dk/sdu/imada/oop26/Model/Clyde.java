@@ -4,16 +4,16 @@ public class Clyde extends Ghost {
     public Clyde() {
         type = GhostType.CLYDE;
         x = 15.5;
-        y = 14;
+        y = 14.1;
     }
 
     @Override
-    public void update_direction(Pacman pacman, Maze maze) {
-        if (!alive) {
-            super.update_direction(pacman, maze);
-            return;
-        }
-        
+    public void scatter(Maze maze) {
+        setWantedDirection(AStar.astar(maze, (int)x, (int)y, 1, Maze.MAZE_HEIGHT-2, getDirection()));
+    }
+
+    @Override
+    public void target_pacman(Pacman pacman, Maze maze) {
         double dx = pacman.getx() - x;
         double dy = pacman.gety() - y;
         double dist = Math.sqrt(dx*dx+dy*dy);
