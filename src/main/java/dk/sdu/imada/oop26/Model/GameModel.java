@@ -1,10 +1,11 @@
 package dk.sdu.imada.oop26.Model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class GameModel {
+public class GameModel implements Subject {
     private GameState state = GameState.NORMAL;
     private double stateDuration = 0;
     private int hp = 5;
@@ -13,6 +14,9 @@ public class GameModel {
     private List<Ghost> ghosts;
     private Maze maze;
     private int score;
+
+    // Observers
+	private final List<Observer> observers = new LinkedList<>();
 
     public GameModel() {
         pacman = new Pacman();
@@ -64,6 +68,8 @@ public class GameModel {
                 }
             }
         }
+
+        notifyObservers(dt);
     }
 
     private void pacmanDeath() {
@@ -154,5 +160,21 @@ public class GameModel {
 
     public void setDirection(Direction direction) {
         pacman.setWantedDirection(direction);
+    }
+
+    // Subject interface
+    @Override
+    public boolean registerObserver(final Observer observer) {
+        return observers.add(observer);
+    }
+    
+    @Override
+	public boolean deregisterObserver(final Observer observer) {
+        return observers.remove(observer);
+    }
+    
+    @Override
+	public void notifyObservers(double dt) {
+		observers.forEach(o -> o.update(this, dt));
     }
 }

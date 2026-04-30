@@ -46,7 +46,7 @@
             <version>${javafx.maven.plugin.version}</version>
             <configuration>
                 <jlinkImageName>pacman</jlinkImageName>
-                <mainClass>dk.sdu.imada.oop26.Main</mainClass>
+                <mainClass>dk.sdu.imada.oop26.Controller.GameController</mainClass>
             </configuration>
         </plugin> 
     </plugins>

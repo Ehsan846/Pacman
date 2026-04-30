@@ -11,12 +11,14 @@ import dk.sdu.imada.oop26.Model.GameModel;
 import dk.sdu.imada.oop26.Model.GhostType;
 import dk.sdu.imada.oop26.Model.Ghost;
 import dk.sdu.imada.oop26.Model.Maze;
+import dk.sdu.imada.oop26.Model.Observer;
+import dk.sdu.imada.oop26.Model.Subject;
 import dk.sdu.imada.oop26.Model.Tile;
 import dk.sdu.imada.oop26.Model.GameState;
 import dk.sdu.imada.oop26.Controller.GameController;
 
 
-public class GameView {
+public class GameView implements Observer {
 
     private Scene scene;
     private Canvas canvas;
@@ -55,6 +57,13 @@ public class GameView {
 
     public Scene getScene() {
         return scene;
+    }
+
+    // Observer
+    @Override
+    public void update(final Subject subject, double dt) {
+        if (subject instanceof GameModel)
+            drawGame((GameModel)subject, dt);
     }
 
     public void drawGame(GameModel model, double dt) {
