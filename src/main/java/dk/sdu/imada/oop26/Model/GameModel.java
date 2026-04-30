@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 public class GameModel implements Subject {
     private GameState state = GameState.NORMAL;
     private double stateDuration = 0;
-    private int hp = 5;
+    private int hp = 2;
 
     private Pacman pacman;
     private List<Ghost> ghosts;
@@ -82,6 +82,9 @@ public class GameModel implements Subject {
 
         state = GameState.IMMUNE;
         stateDuration = 2;
+
+        for (Ghost ghost : ghosts)
+            ghost.scared();
     }
 
     private void checkGhostCollission(Ghost ghost) {
