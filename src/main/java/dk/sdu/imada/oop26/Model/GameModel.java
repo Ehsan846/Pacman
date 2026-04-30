@@ -44,7 +44,8 @@ public class GameModel implements Subject {
             double x = e.getKey();
             double y = e.getValue();
             Tile tile = maze.getTile(x, y);
-            if (tile == Tile.Pellet) {
+            // pacman ignore pellet
+            if (tile == Tile.Pellet && state != GameState.IMMUNE) {
                 maze.emptyTile(x, y);
                 score++;
             } else if (tile == Tile.PowerPellet) {
