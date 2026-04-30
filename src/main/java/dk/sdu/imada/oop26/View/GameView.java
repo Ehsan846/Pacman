@@ -81,6 +81,7 @@ public class GameView implements Observer {
         drawPacman(model);
         drawGhosts(model);
         drawScore(model);
+        drawLevel(model);
 
         gc.restore();
     }
@@ -173,5 +174,10 @@ public class GameView implements Observer {
     private void drawScore(GameModel model) {
         gc.setFill(Color.WHITE);
         gc.fillText(Integer.toString(model.getScore()), WIDTH - 200, HEIGHT - 20);
+    }
+    
+    private void drawLevel(GameModel model){
+        gc.setFill(Color.WHITE);
+        gc.fillText("Level " + Integer.toString(model.getLevel()), 200, HEIGHT - 20);
     }
 }

@@ -94,7 +94,7 @@ public abstract class MovingEntity {
     public void setY(double y) { this.y = y; }
 
     // for new level
-    public void setSpeed(int newSpeed){
-        speed = newSpeed;
+    public void setSpeed(int addSpeed){
+        speed = speed +  addSpeed;
     }
 }

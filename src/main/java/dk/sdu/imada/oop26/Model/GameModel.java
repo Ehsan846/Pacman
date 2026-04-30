@@ -8,7 +8,8 @@ import java.util.Map.Entry;
 public class GameModel implements Subject {
     private GameState state = GameState.NORMAL;
     private double stateDuration = 0;
-    private int lives = 5;
+    private int lives = 3;
+    private int level = 1; 
 
     private Pacman pacman;
     private List<Ghost> ghosts;
@@ -127,6 +128,7 @@ public class GameModel implements Subject {
         //all pellets eaten games done
         if (maze.allPelletsEaten()){
             resetGame();
+            level ++; 
             return false;
         }
 
@@ -179,6 +181,10 @@ public class GameModel implements Subject {
 
     public int getScore() {
         return score;
+    }
+
+    public int getLevel(){
+        return level; 
     }
 
     public int gethp() {
