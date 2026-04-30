@@ -37,6 +37,7 @@ public class GameController extends Application {
                 lastNanoTime = currentNanoTime;
                 
                 model.update(dt);
+                model.notifyObservers(dt);
             }
         }.start();
         primaryStage.show();

@@ -74,8 +74,6 @@ public class GameModel implements Subject {
                 }
             }
         }
-
-        notifyObservers(dt);
     }
 
     private void pacmanDeath() {
