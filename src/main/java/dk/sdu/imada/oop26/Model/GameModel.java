@@ -59,18 +59,16 @@ public class GameModel implements Subject {
         }
 
         for (Ghost ghost : ghosts) {
-            ghost.update(pacman, maze);
+            ghost.update_direction(pacman, maze);
             ghost.update(dt, maze);
 
             if (ghost.isAlive()) {
                 checkGhostCollission(ghost);
-            } else {
-                if (maze.getTile(ghost.getx(), ghost.gety()) == Tile.GhostRespawn) {
-                    if (state != GameState.POWER) {
-                        ghost.normal();
-                    } else {
-                        ghost.scared();
-                    }
+            } else if (maze.getTile(ghost.getx(), ghost.gety()) == Tile.GhostRespawn) {
+                if (state != GameState.POWER) {
+                    ghost.normal();
+                } else {
+                    ghost.scared();
                 }
             }
         }

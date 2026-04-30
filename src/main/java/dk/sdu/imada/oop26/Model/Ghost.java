@@ -44,7 +44,11 @@ public abstract class Ghost extends MovingEntity {
 
     abstract public void target_pacman(Pacman pacman, Maze maze);
 
+
     public void update_direction(Pacman pacman, Maze maze) {
+        if ((int)x == last_x && (int)y == last_y && (int)pacman.x == last_px && pacman.y == last_py)
+            return;
+
         switch (state) {
             case ALIVE:
                 target_pacman(pacman, maze);
@@ -56,13 +60,7 @@ public abstract class Ghost extends MovingEntity {
                 scatter(maze);
                 break;
         }
-    }
 
-
-    public void update(Pacman pacman, Maze maze) {
-        if ((int)x == last_x && (int)y == last_y && (int)pacman.x == last_px && pacman.y == last_py)
-            return;
-        update_direction(pacman, maze);
         last_x = (int)x;
         last_y = (int)y;
         last_px = (int)pacman.x;
