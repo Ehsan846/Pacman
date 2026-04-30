@@ -42,5 +42,5 @@ In the state Finished, the game displays the latest score, and offers the option
 [ ] Ghost pathing - OPTIONAL: Scatter
 [ ] Ghost kill/respawn
 [ ] Newlevel når alle pellets er spist
-[ ] Portal (Ghosts er langsommere i portal området)
-[ ] Block pacman fra ghost room
+[x] Portal (Ghosts er langsommere i portal området)
+[x] Block pacman fra ghost room

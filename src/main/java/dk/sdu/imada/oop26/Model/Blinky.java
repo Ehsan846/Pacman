@@ -7,12 +7,13 @@ public class Blinky extends Ghost {
         y = 11;
     }
 
-    public void update_direction(Pacman pacman, Maze maze) {
-        if (!alive) {
-            super.update_direction(pacman, maze);
-            return;
-        }
-        
+    @Override
+    public void scatter(Maze maze) {
+        setWantedDirection(AStar.astar(maze, (int)x, (int)y, Maze.MAZE_WIDTH-2, 1, getDirection()));
+    }
+
+    @Override
+    public void target_pacman(Pacman pacman, Maze maze) {
         setWantedDirection(AStar.astar(maze, (int)x, (int)y, (int)pacman.x, (int)pacman.y, getDirection()));
     }
 }

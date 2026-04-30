@@ -2,7 +2,7 @@ package dk.sdu.imada.oop26.Model;
 
 
 public abstract class Ghost extends MovingEntity {
-    protected boolean alive = true;
+    protected GhostState state = GhostState.ALIVE;
     protected GhostType type;
 
     private int last_x;
@@ -18,22 +18,46 @@ public abstract class Ghost extends MovingEntity {
         speed = DEFAULT_SPEED;
     }
 
+    private void set_speed(Maze maze) {
+        if (isAlive() && maze.inGhostSlowZone(x, y)) {
+            speed = SLOWED_SPEED;
+        } else if (state == GhostState.ALIVE) {
+            speed = DEFAULT_SPEED;
+        } else if (state == GhostState.SCARED) {
+            speed = SLOWED_SPEED;
+        } else if (state == GhostState.SCARED) {
+            speed = DEAD_SPEED;
+        }
+    }
+
     @Override
     public void update(double dt, Maze maze) {
-        if (alive) {
-            if (maze.inGhostSlowZone(x, y))
-                speed = SLOWED_SPEED;
-            else
-                speed = DEFAULT_SPEED;
-        }
-
+        set_speed(maze);
         super.update(dt, maze);
     }
 
-    public void update_direction(Pacman pacman, Maze maze) {
-        // Default target respawnpoint
+    public void gotoRespawn(Maze maze) {
         setWantedDirection(AStar.astar(maze, (int)x, (int)y, maze.getRespawnX(), maze.getRespawnY(), getDirection()));
     }
+
+    abstract public void scatter(Maze maze);
+
+    abstract public void target_pacman(Pacman pacman, Maze maze);
+
+    public void update_direction(Pacman pacman, Maze maze) {
+        switch (state) {
+            case ALIVE:
+                target_pacman(pacman, maze);
+                break;
+            case DEAD:
+                gotoRespawn(maze);
+                break;
+            case SCARED:
+                scatter(maze);
+                break;
+        }
+    }
+
 
     public void update(Pacman pacman, Maze maze) {
         if ((int)x == last_x && (int)y == last_y && (int)pacman.x == last_px && pacman.y == last_py)
@@ -45,48 +69,16 @@ public abstract class Ghost extends MovingEntity {
         last_py = (int)pacman.y;
     }
 
-    public Direction goto_target(double targetX, double targetY, Maze maze) {
-        /*
-
-
-        Bliver den stadig brugt?
-
-
-        */
-        Direction opposite = Direction.oppositeDirection(getDirection());
-        double minDist = Double.POSITIVE_INFINITY;
-
-        Direction r = Direction.NONE;
-        for (Direction d : Direction.values()) {
-            if (d == Direction.NONE)
-                continue;
-            if (d == opposite)
-                continue;
-            double newx = Math.floor(x) + d.dx;
-            double newy = Math.floor(y) + d.dy;
-            if (maze.getTile(newx, newy) == Tile.Wall)
-                continue;
-
-            double xdiff = newx - targetX;
-            double ydiff = newy - targetY;
-            double dist = xdiff*xdiff + ydiff*ydiff;
-            if (dist < minDist) {
-                minDist = dist;
-                r = d;
-            }
-        }
-
-        return r;
-    }
-
     public void eat() {
-        alive = false;
-        speed = DEAD_SPEED;
+        state = GhostState.DEAD;
     }
 
-    public void respawn() {
-        alive = true;
-        speed = DEFAULT_SPEED;
+    public void normal() {
+        state = GhostState.ALIVE;
+    }
+
+    public void scared() {
+        state = GhostState.SCARED;
     }
 
     public GhostType gettype() {
@@ -94,6 +86,6 @@ public abstract class Ghost extends MovingEntity {
     }
 
     public boolean isAlive() {
-        return alive;
+        return state != GhostState.DEAD;
     }
 }
