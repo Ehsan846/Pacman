@@ -85,4 +85,8 @@ public abstract class Ghost extends MovingEntity {
     public boolean isAlive() {
         return state != GhostState.DEAD;
     }
+
+    public GhostState getState() {
+        return state;
+    }
 }

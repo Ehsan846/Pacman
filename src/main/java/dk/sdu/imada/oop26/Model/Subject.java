@@ -5,5 +5,5 @@ public interface Subject {
     
 	boolean deregisterObserver(final Observer observer);
     
-	void notifyObservers(double dt);
+	void notifyObservers();
 }

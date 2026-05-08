@@ -62,6 +62,8 @@ public class GameModel implements Subject {
                 }
             }
         }
+
+        notifyObservers();
     }
 
     private void resetGame() {
@@ -79,6 +81,7 @@ public class GameModel implements Subject {
         Blinky blinky = new Blinky();
         ghosts.add(blinky);
         ghosts.add(new Inky(blinky));
+        notifyObservers();
     }
 
     private void pacmanDeath() {
@@ -172,7 +175,7 @@ public class GameModel implements Subject {
         return level;
     }
 
-    public int gethp() {
+    public int getLives() {
         return lives;
     }
 
@@ -196,9 +199,9 @@ public class GameModel implements Subject {
     }
 
     @Override
-	public void notifyObservers(double dt) {
+	public void notifyObservers() {
         for (Observer observer : observers)
-            observer.update(this, dt);
+            observer.update(this);
     }
 }
 

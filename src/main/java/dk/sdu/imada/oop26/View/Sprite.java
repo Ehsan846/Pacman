@@ -3,11 +3,12 @@ package dk.sdu.imada.oop26.View;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.PixelReader;
+import dk.sdu.imada.oop26.View.Sprites;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Sprite {
     private Image sprite;
-    private int targetWidth, targetHeight;
+    private int targetWidth = Sprites.DRAWSIZE, targetHeight = Sprites.DRAWSIZE;
 
     public Sprite(String filePath) {
         sprite = new Image(getClass().getResourceAsStream("/" + filePath));
@@ -20,6 +21,11 @@ public class Sprite {
         sprite = new WritableImage(reader, x, y, width, height);
         this.targetWidth = targetWidth;
         this.targetHeight = targetHeight;
+    }
+    
+    public Sprite(Image spritesheet, int x, int y) {
+        PixelReader reader = spritesheet.getPixelReader();
+        sprite = new WritableImage(reader, x, y, Sprites.SIZE, Sprites.SIZE);
     }
 
     public Sprite(Image spritesheet, int x, int y, int width, int height) {

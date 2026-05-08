@@ -1,38 +1,50 @@
-// package dk.sdu.imada.oop26.View;
+package dk.sdu.imada.oop26.View;
 
-// import dk.sdu.imada.oop26.Model.Direction;
+import dk.sdu.imada.oop26.Model.Direction;
+import dk.sdu.imada.oop26.View.Sprites;
 
-// public class Animator {
-//     private Sprite[] sprites;
-//     protected final double animationTime;
-//     protected final int spriteCount;
+public class Animator {
+    private Sprite[] sprites;
+    private double animationTime;
+    private int spriteCount;
+    private boolean looping = true;
 
-//     protected int current = 0;
-//     protected double timer = 0;
+    private int current = 0;
+    private double timer = 0;
 
-//     public Animator(Sprite[] sprites, double animationTime, int splits) {
-//         if (sprites.length % splits != 0) {
-//             System.out.println("WARNING: Sprite length: " + sprites.length + " cannot be split evenly with " + splits + " splits.");
-//         }
+    public Animator() { }
 
-//         this.sprites = sprites;
-//         this.animationTime = animationTime;
-//         spriteCount = sprites.length / splits;
-//     }
+    public void setSprites(Sprite[] sprites, boolean splits, double animationTime) {
+        this.sprites = sprites;
+        this.animationTime = animationTime;
+        spriteCount = sprites.length;
+        if (splits)
+            spriteCount /= 4;
+        current = 0;
+        timer = 0;
+    }
 
-//     public void update(double dt) {
-//         timer += dt;
-//         if (timer > animationTime) {
-//             timer -= animationTime;
-//             current++;
-//             if (current >= spriteCount) {
-//                 current = 0;
-//             }
-//         }
-//     }
+    public void update(double dt) {
+        timer += dt;
+        if (timer > animationTime) {
+            timer -= animationTime;
+            current++;
+            if (looping && current >= spriteCount) {
+                current = 0;
+            }
+        }
+    }
 
-//     public Sprite getDirectionalSprite(Direction dir) {
-//         final int rotationOffset = spriteCount * Sprites.getRotationOffset(dir);
-//         return sprites[current + rotationOffset];
-//     }
-// }
+    public void setLooping(boolean looping) {
+        this.looping = looping;
+    }
+
+    public Sprite getDirectionalSprite(Direction dir) {
+        int index = current;
+        if (spriteCount != sprites.length)
+            index += spriteCount * Sprites.getRotationOffset(dir);
+        if (index < sprites.length)
+            return sprites[index];
+        return Sprites.emptySprite;
+    }
+}
