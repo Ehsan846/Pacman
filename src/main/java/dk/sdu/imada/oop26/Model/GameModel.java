@@ -20,24 +20,13 @@ public class GameModel implements Subject {
 	private final List<Observer> observers = new LinkedList<>();
 
     public GameModel() {
-        pacman = new Pacman();
-
-        ghosts = new ArrayList<Ghost>(4);
-        ghosts.add(new Pinky());
-        ghosts.add(new Clyde());
-
-    	Blinky blinky = new Blinky();
-        ghosts.add(blinky);
-
-        ghosts.add(new Inky(blinky));
-
-        maze = new Maze();
+        resetGame();
     }
 
 
     public void update(double dt) {
         if (!handleState(dt)) {
-            return;
+            return; // Enters when game is not running
         }
 
         pacman.update(dt, maze);
@@ -77,13 +66,14 @@ public class GameModel implements Subject {
         }
     }
 
+    private void resetGame() {
+        state = GameState.NORMAL;
+        stateDuration = 0;
 
-
-    private void resetGame(){
-        // Just redefine our stuff, since the old stuff no longer have a reference they are picked up by garbage collector
-        
-        pacman = new Pacman();
         maze = new Maze();
+
+        pacman = new Pacman();
+
         ghosts = new ArrayList<Ghost>(4);
         ghosts.add(new Pinky());          
         ghosts.add(new Clyde());
@@ -212,7 +202,8 @@ public class GameModel implements Subject {
     
     @Override
 	public void notifyObservers(double dt) {
-		observers.forEach(o -> o.update(this, dt));
+        for (Observer observer : observers)
+            observer.update(this, dt);
     }
 }
 

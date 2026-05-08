@@ -62,8 +62,8 @@ public class GameView implements Observer {
     // Observer
     @Override
     public void update(final Subject subject, double dt) {
-        if (subject instanceof GameModel)
-            drawGame((GameModel)subject, dt);
+        if (subject instanceof GameModel model)
+            drawGame(model, dt);
     }
 
     public void drawGame(GameModel model, double dt) {
