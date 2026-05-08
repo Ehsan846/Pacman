@@ -78,6 +78,10 @@ public class Maze {
         );
     }
 
+    public boolean inPrison(Position p) {
+        return p.x() >= 10 && p.x() <= 17 && p.y() >= 12 && p.y() <= 16;
+    }
+
     public Position getRespawn() {
         return ghostRespawn;
     }
