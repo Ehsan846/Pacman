@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import dk.sdu.imada.oop26.Model.GameModel;
+import dk.sdu.imada.oop26.Model.GameState;
 import dk.sdu.imada.oop26.Model.Position;
 import dk.sdu.imada.oop26.Model.Subject;
 
@@ -11,6 +12,7 @@ public class UIRenderer implements Renderable {
     private int lives;
     private int score;
     private int level;
+    private GameState state;
 
     public static final Position LOWER_UI = new Position(75, GameView.HEIGHT - 20 - GameView.PPT / 2);
 
@@ -20,9 +22,14 @@ public class UIRenderer implements Renderable {
     @Override
     public void render(GraphicsContext gc) {
         renderLives(gc);
-        
+
+        gc.setFill(Color.WHITE);
         renderLevel(gc);
         renderScore(gc);
+
+        if (state == GameState.FINISHED) {
+            renderGameOver(gc);
+        }
     }
 
     @Override
@@ -37,6 +44,7 @@ public class UIRenderer implements Renderable {
             lives = model.getLives();
             score = model.getScore();
             level = model.getLevel();
+            state = model.getState();
         }
     }
 
@@ -49,12 +57,15 @@ public class UIRenderer implements Renderable {
     }
     
     private void renderScore(GraphicsContext gc) {
-        gc.setFill(Color.WHITE);
         gc.fillText(Integer.toString(score), GameView.WIDTH - 200, GameView.HEIGHT - 20);
     }
 
-    private void renderLevel(GraphicsContext gc){
-        gc.setFill(Color.WHITE);
+    private void renderLevel(GraphicsContext gc) {
         gc.fillText("Level " + Integer.toString(level), 200, GameView.HEIGHT - 20);
+    }
+    
+    private void renderGameOver(GraphicsContext gc) {
+        gc.fillText("Game Over ", GameView.WIDTH / 2, GameView.HEIGHT / 2);
+        gc.fillText("Score: " + Integer.toString(score), GameView.WIDTH / 2, GameView.HEIGHT / 2 + 40);
     }
 }
