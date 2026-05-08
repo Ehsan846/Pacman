@@ -5,10 +5,8 @@ public abstract class Ghost extends MovingEntity {
     protected GhostState state = GhostState.ALIVE;
     protected GhostType type;
 
-    private int last_x;
-    private int last_y;
-    private int last_px;
-    private int last_py;
+    private Position lastpos = new Position(0, 0);
+    private Position lastPacman = new Position(0, 0);
 
     public static final int DEFAULT_SPEED = 8;
     public static final int SLOWED_SPEED = 4;
@@ -19,7 +17,7 @@ public abstract class Ghost extends MovingEntity {
     }
 
     private void set_speed(Maze maze) {
-        if (isAlive() && maze.inGhostSlowZone(x, y)) {
+        if (isAlive() && maze.inGhostSlowZone(position)) {
             speed = SLOWED_SPEED;
         } else if (state == GhostState.ALIVE) {
             speed = DEFAULT_SPEED;
@@ -36,35 +34,36 @@ public abstract class Ghost extends MovingEntity {
         super.update(dt, maze);
     }
 
-    public void gotoRespawn(Maze maze) {
-        setWantedDirection(AStar.astar(maze, (int)x, (int)y, maze.getRespawnX(), maze.getRespawnY(), getDirection()));
+    public Position gotoRespawn(Maze maze) {
+        return maze.getRespawn();
     }
 
-    abstract public void scatter(Maze maze);
+    abstract public Position scatter(Maze maze);
 
-    abstract public void target_pacman(Pacman pacman, Maze maze);
+    abstract public Position target_pacman(Pacman pacman, Maze maze);
 
 
     public void update_direction(Pacman pacman, Maze maze) {
-        if ((int)x == last_x && (int)y == last_y && (int)pacman.x == last_px && pacman.y == last_py)
+        if (lastpos.equals(Position.floorPosition(position)) && lastPacman == Position.floorPosition(pacman.getPostition()))
             return;
 
+        Position target = new Position(0, 0);
         switch (state) {
             case ALIVE:
-                target_pacman(pacman, maze);
+                target = target_pacman(pacman, maze);
                 break;
             case DEAD:
-                gotoRespawn(maze);
+                target = gotoRespawn(maze);
                 break;
             case SCARED:
-                scatter(maze);
+                target = scatter(maze);
                 break;
         }
 
-        last_x = (int)x;
-        last_y = (int)y;
-        last_px = (int)pacman.x;
-        last_py = (int)pacman.y;
+        setWantedDirection(AStar.astar(maze, Position.floorPosition(position), Position.floorPosition(target), getDirection()));
+
+        lastpos = Position.floorPosition(position);
+        lastPacman = Position.floorPosition(pacman.getPostition());
     }
 
     public void eat() {

@@ -7,23 +7,22 @@ public class Inky extends Ghost {
     public Inky(Blinky blinky) {
         this.blinky = blinky;
         type = GhostType.INKY;
-        x = 11.5;
-        y = 14;
+        position = new Position(11.5, 14);
     }
 
     @Override
-    public void scatter(Maze maze) {
-        setWantedDirection(AStar.astar(maze, (int)x, (int)y, Maze.MAZE_WIDTH-2, Maze.MAZE_HEIGHT-2, getDirection()));
+    public Position scatter(Maze maze) {
+        return new Position(Maze.MAZE_WIDTH-2, Maze.MAZE_HEIGHT-2);
     }
 
     @Override
-    public void target_pacman(Pacman pacman, Maze maze) {
-        int blinkyX = (int)blinky.getx();
-        int blinkyY = (int)blinky.gety();
+    public Position target_pacman(Pacman pacman, Maze maze) {
+        int blinkyX = (int)blinky.getPostition().x();
+        int blinkyY = (int)blinky.getPostition().y();
 
         Direction pacDir = pacman.getDirection();
-        int aheadX = (int)pacman.getx() + 2 * pacDir.dx;
-        int aheadY = (int)pacman.gety() + 2 * pacDir.dy;
+        int aheadX = (int)pacman.getPostition().x() + 2 * pacDir.dx;
+        int aheadY = (int)pacman.getPostition().y() + 2 * pacDir.dy;
 
         int vectorX = aheadX - blinkyX;
         int vectorY = aheadY - blinkyY;
@@ -36,16 +35,16 @@ public class Inky extends Ghost {
         finalVectorY = Math.max(0, Math.min(maze.MAZE_HEIGHT-1, finalVectorY));
 
         // Find nearest non-wall tile to target
-        while (maze.getTile(finalVectorX, finalVectorY) == Tile.Wall) {
-            int dx = finalVectorX - (int)x;
-            int dy = finalVectorY - (int)y;
+        while (maze.getTile(new Position(finalVectorX, finalVectorY)) == Tile.Wall) {
+            double dx = finalVectorX - position.x();
+            double dy = finalVectorY - position.y();
             if (Math.abs(dx) > Math.abs(dy)) {
-                finalVectorX -= Integer.signum(dx);
+                finalVectorX -= Math.signum(dx);
             } else {
-                finalVectorY -= Integer.signum(dy);
+                finalVectorY -= Math.signum(dy);
             }
         }
 
-        setWantedDirection(AStar.astar(maze, (int)x, (int)y, finalVectorX, finalVectorY, getDirection()));
+        return new Position(finalVectorX, finalVectorY);
     }
 }

@@ -33,14 +33,14 @@ In the state Finished, the game displays the latest score, and offers the option
 [ ] Sprite Factory
 
 # Model
-[ ] Pacman death
+[x] Pacman death
 [x] Score
-[ ] PowerPellet
+[x] PowerPellet
 [x] Ghost pathing - Chase
-[ ] Ghost pathing - Respawn
+[x] Ghost pathing - Respawn
 [ ] Ghost pathing - Flee
-[ ] Ghost pathing - OPTIONAL: Scatter
-[ ] Ghost kill/respawn
+[x] Ghost pathing - OPTIONAL: Scatter
+[x] Ghost kill/respawn
 [ ] Newlevel når alle pellets er spist
 [x] Portal (Ghosts er langsommere i portal området)
 [x] Block pacman fra ghost room

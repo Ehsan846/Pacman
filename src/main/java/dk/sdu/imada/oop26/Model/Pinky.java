@@ -4,36 +4,34 @@ public class Pinky extends Ghost {
 
     public Pinky() {
         type = GhostType.PINKY;
-        x = 13.5;
-        y = 14;
+        position = new Position(13.5, 14);
     }
 
     @Override
-    public void scatter(Maze maze) {
-        setWantedDirection(AStar.astar(maze, (int)x, (int)y, 1, 1, getDirection()));
+    public Position scatter(Maze maze) {
+        return new Position(1, 1);
     }
 
     @Override
-    public void target_pacman(Pacman pacman, Maze maze) {
+    public Position target_pacman(Pacman pacman, Maze maze) {
         Direction pacDir = pacman.getDirection();
-        int aheadX = (int)pacman.getx() + 4 * pacDir.dx;
-        int aheadY = (int)pacman.gety() + 4 * pacDir.dy;
+        int aheadX = (int)pacman.getPostition().x() + 4 * pacDir.dx;
+        int aheadY = (int)pacman.getPostition().y() + 4 * pacDir.dy;
 
         // stay inside the map
         aheadX = Math.max(0, Math.min(maze.MAZE_WIDTH-1, aheadX));
         aheadY = Math.max(0, Math.min(maze.MAZE_HEIGHT-1, aheadY));
-
         // Find nearest non-wall tile to target
-        while (maze.getTile(aheadX, aheadY) == Tile.Wall) {
-            int dx = aheadX - (int)x;
-            int dy = aheadY - (int)y;
+        while (maze.getTile(new Position(aheadX, aheadY)) == Tile.Wall) {
+            double dx = aheadX - position.x();
+            double dy = aheadY - position.y();
             if (Math.abs(dx) > Math.abs(dy)) {
-                aheadX -= Integer.signum(dx);
+                aheadX -= Math.signum(dx);
             } else {
-                aheadY -= Integer.signum(dy);
+                aheadY -= Math.signum(dy);
             }
         }
 
-        setWantedDirection(AStar.astar(maze, (int)x, (int)y, aheadX, aheadY, getDirection()));
+        return new Position(aheadX, aheadY);
     }
 }

@@ -11,8 +11,7 @@ public class Maze {
 
     private Tile[][] tiles = new Tile[MAZE_WIDTH][MAZE_HEIGHT];
 
-    private int ghostRespawnX = 0;
-    private int ghostRespawnY = 0;
+    private Position ghostRespawn;
 
     Maze() {
         try {
@@ -44,8 +43,7 @@ public class Maze {
                         break;
                     case 'r':
                         tiles[x][y] = Tile.GhostRespawn;
-                        ghostRespawnX = x;
-                        ghostRespawnY = y;
+                        ghostRespawn = new Position(x, y);
                         break;
                     default:
                     case ' ':
@@ -60,46 +58,39 @@ public class Maze {
         reader.close();
     }
 
-    public Tile getTile(double x, double y) {
-        if (x < 0 || x >= MAZE_WIDTH || y < 0 || y >= MAZE_HEIGHT)
+    public Tile getTile(Position p) {
+        if (p.x() < 0 || p.x() >= MAZE_WIDTH || p.y() < 0 || p.y() >= MAZE_HEIGHT)
             return Tile.Empty;
-        return tiles[(int)x][(int)y];
+        return tiles[(int)p.x()][(int)p.y()];
     }
 
 
-    public void emptyTile(double x, double y) {
-        if (x < 0 || x > MAZE_WIDTH - 1 || y < 0 || y > MAZE_HEIGHT - 1)
+    public void emptyTile(Position p) {
+        if (p.x() < 0 || p.x() > MAZE_WIDTH - 1 || p.y() < 0 || p.y() > MAZE_HEIGHT - 1)
             return;
-        tiles[(int)x][(int)y] = Tile.Empty;
+        tiles[(int)p.x()][(int)p.y()] = Tile.Empty;
     }
 
-    public boolean inGhostSlowZone(double x, double y) {
+    public boolean inGhostSlowZone(Position p) {
         return (
-            y == 14 && (x <= 6 || x >= Maze.MAZE_WIDTH-6) // Portal area
-            || getTile(x, y) == Tile.Gate // Ghost entrance
+            p.y() == 14 && (p.x() <= 6 || p.x() >= Maze.MAZE_WIDTH-6) // Portal area
+            || getTile(p) == Tile.Gate // Ghost entrance
         );
     }
 
-    public int getRespawnX() {
-        return ghostRespawnX;
-    }
-
-    public int getRespawnY() {
-        return ghostRespawnY;
+    public Position getRespawn() {
+        return ghostRespawn;
     }
 
     public boolean allPelletsEaten(){
-        for(int i = 0; i < MAZE_WIDTH ; i++){
-            for(int j = 0; j < MAZE_HEIGHT; j++){
-                if(getTile(i, j) == Tile.Pellet || getTile(i, j) == Tile.PowerPellet){
+        for (int i = 0; i < MAZE_WIDTH ; i++) {
+            for (int j = 0; j < MAZE_HEIGHT; j++) {
+                Tile t = getTile(new Position(i, j));
+                if (t == Tile.Pellet || t == Tile.PowerPellet) {
                     return false;
-                }
-                else{
                 }
             }
         }
-        
         return true;
-
     }
 }

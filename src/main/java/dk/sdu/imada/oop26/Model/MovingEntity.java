@@ -10,7 +10,8 @@ import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
 
 public abstract class MovingEntity {
-    protected double x, y, speed;
+    protected double speed;
+    protected Position position;
     private Direction direction = Direction.NONE;
     private Direction wantedDirection = direction;
 
@@ -21,27 +22,27 @@ public abstract class MovingEntity {
             direction = wantedDirection;
         } else {
             if (!move(direction, dt, maze)){
-                x = Math.round(x);
-                y = Math.round(y);
+                position = new Position(Math.round(position.x()), Math.round(position.y()));
             }
         }
     }
 
-    public List<Entry<Double, Double>> getTouchingTiles(double x, double y) {
+    public List<Position> getTouchingTiles(Position p) {
         final double offset = 1 - 1e-5;
-        List<Entry<Double, Double>> list = Arrays.asList(
-            new SimpleEntry(x, y),
-            new SimpleEntry(x + offset, y),
-            new SimpleEntry(x, y + offset),
-            new SimpleEntry(x + offset, y + offset));
+        List<Position> list = Arrays.asList(
+            new Position(p.x(), p.y()),
+            new Position(p.x() + offset, p.y()),
+            new Position(p.x(), p.y() + offset),
+            new Position(p.x() + offset, p.y() + offset));
         return list;
     }
 
 
 
     private boolean move(Direction direction, double dt, Maze maze) {
-        double newX = x + speed * dt * direction.dx;
-        double newY = y + speed * dt * direction.dy;
+        double newX = position.x() + speed * dt * direction.dx;
+        double newY = position.y() + speed * dt * direction.dy;
+
 
         switch (direction) {
             case UP:
@@ -59,25 +60,25 @@ public abstract class MovingEntity {
         else if (newX >= Maze.MAZE_WIDTH)
             newX -= Maze.MAZE_WIDTH;
 
-        if (!getTouchingTiles(newX, newY).stream()
-                .anyMatch(e -> disallowedTiles.contains(maze.getTile(e.getKey(), e.getValue())))) {
-            x = newX;
-            y = newY;
+        Position newPos = new Position(newX, newY);
+
+        if (!getTouchingTiles(newPos).stream()
+                .anyMatch(e -> disallowedTiles.contains(maze.getTile(e)))) {
+            position = newPos;
             return true;
         }
         return false;
     }
 
-    public double getx() {
-        return x;
+    public Position getPostition() {
+        return position;
     }
-
-    public double gety() {
-        return y;
-    }
-
     public Direction getDirection() {
         return direction;
+    }
+
+    public Direction getWantedDirection() {
+        return wantedDirection;
     }
 
     public void setDirection(Direction direction) {
@@ -90,11 +91,11 @@ public abstract class MovingEntity {
             wantedDirection = direction;
     }
 
-    public void setX(double x) { this.x = x; }
-    public void setY(double y) { this.y = y; }
+    public void setX(double x) { position = new Position(x, position.y()); }
+    public void setY(double y) { position = new Position(position.x(), y); }
 
     // for new level
     public void setSpeed(int addSpeed){
-        speed = speed +  addSpeed;
+        speed = speed + addSpeed;
     }
 }
