@@ -16,6 +16,7 @@ public enum Direction {
     }
 
     private static final Direction[] directions = new Direction[]{UP, DOWN, LEFT, RIGHT};
+
     public static Direction[] getDirections() {
         return directions;
     }

@@ -35,7 +35,7 @@ public class GameController extends Application {
             public void handle(long currentNanoTime) {
                 double dt = (currentNanoTime - lastNanoTime)/1000000000.0;
                 lastNanoTime = currentNanoTime;
-                
+
                 model.update(dt);
                 model.notifyObservers(dt);
             }

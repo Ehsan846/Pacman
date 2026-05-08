@@ -3,25 +3,24 @@ package dk.sdu.imada.oop26.Model;
 public class Clyde extends Ghost {
     public Clyde() {
         type = GhostType.CLYDE;
-        x = 15.5;
-        y = 14.1;
+        position = new Position(15.5, 14);
     }
 
     @Override
-    public void scatter(Maze maze) {
-        setWantedDirection(AStar.astar(maze, (int)x, (int)y, 1, Maze.MAZE_HEIGHT-2, getDirection()));
+    public Position scatter(Maze maze) {
+        return new Position(1, Maze.MAZE_HEIGHT-2);
     }
 
     @Override
-    public void target_pacman(Pacman pacman, Maze maze) {
-        double dx = pacman.getx() - x;
-        double dy = pacman.gety() - y;
+    public Position target_pacman(Pacman pacman, Maze maze) {
+        double dx = pacman.getPostition().x() - position.x();
+        double dy = pacman.getPostition().y() - position.y();
         double dist = Math.sqrt(dx*dx+dy*dy);
 
         if (dist <= 8) {
-            setWantedDirection(AStar.astar(maze, (int)x, (int)y, 1, 1, getDirection()));
+            return new Position(1, 1);
         } else  {
-            setWantedDirection(AStar.astar(maze, (int)x, (int)y, (int)pacman.x, (int)pacman.y, getDirection()));
+            return pacman.getPostition();
         }
     }
 }

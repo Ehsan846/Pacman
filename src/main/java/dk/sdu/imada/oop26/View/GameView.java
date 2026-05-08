@@ -14,6 +14,7 @@ import dk.sdu.imada.oop26.Model.Maze;
 import dk.sdu.imada.oop26.Model.Observer;
 import dk.sdu.imada.oop26.Model.Subject;
 import dk.sdu.imada.oop26.Model.Tile;
+import dk.sdu.imada.oop26.Model.Position;
 import dk.sdu.imada.oop26.Model.GameState;
 import dk.sdu.imada.oop26.Controller.GameController;
 
@@ -62,8 +63,8 @@ public class GameView implements Observer {
     // Observer
     @Override
     public void update(final Subject subject, double dt) {
-        if (subject instanceof GameModel)
-            drawGame((GameModel)subject, dt);
+        if (subject instanceof GameModel model)
+            drawGame(model, dt);
     }
 
     public void drawGame(GameModel model, double dt) {
@@ -101,10 +102,11 @@ public class GameView implements Observer {
         gc.setFill(Color.PURPLE);
         for (int x = 0; x < Maze.MAZE_WIDTH; x++) {
             for (int y = 0; y < Maze.MAZE_HEIGHT; y++) {
-                if (maze.getTile(x, y) == Tile.Pellet)
+                Position p = new Position(x, y);
+                if (maze.getTile(p) == Tile.Pellet)
                     gc.fillOval(x * PPT - 3, y * PPT - 3, 6, 6);
                     // gc.fillOval(PPT/2 + x*PPT-3, PPT/2 + y*PPT-3, 6, 6);
-                if (maze.getTile(x, y) == Tile.PowerPellet)
+                if (maze.getTile(p) == Tile.PowerPellet)
                     gc.fillOval(x * PPT - 7, y * PPT - 7, 14, 14);
                     // gc.fillOval(PPT/2 + x*PPT-7, PPT/2 + y*PPT-7, 14, 14);
             }
@@ -117,9 +119,9 @@ public class GameView implements Observer {
                 return;
 
             final int rotationOffset = 4 * Sprites.getRotationOffset(model.getDirection());
-            
+
             Sprites.pacman[(frame / 3) % 4 + rotationOffset].draw(
-               gc, model.getx() * PPT, model.gety() * PPT
+               gc, model.getPostition().x() * PPT, model.getPostition().y() * PPT
             );
 
             firstDeathFrame = -1;
@@ -133,11 +135,11 @@ public class GameView implements Observer {
                 return;
             if (index < 0) {
                 Sprites.pacman[2].draw(
-                    gc, model.getx() * PPT, model.gety() * PPT
+                    gc, model.getPostition().x() * PPT, model.getPostition().y() * PPT
                 );
             } else {
                 Sprites.pacmanDeath[index].draw(
-                    gc, model.getx() * PPT, model.gety() * PPT
+                    gc, model.getPostition().x() * PPT, model.getPostition().y() * PPT
                 );
             }
         }
@@ -146,7 +148,7 @@ public class GameView implements Observer {
     private void drawGhosts(GameModel model) {
         if (firstDeathFrame > 0 && frame - firstDeathFrame > 50)
             return;
-        
+
         for (Ghost ghost : model.getGhosts()) {
             final int rotationOffset = Sprites.getRotationOffset(ghost.getDirection());
             final int spriteOffset = Sprites.getGhostOffset(ghost.gettype());
@@ -166,7 +168,7 @@ public class GameView implements Observer {
             }
 
             ghostSprite.draw(
-                gc, ghost.getx() * PPT, ghost.gety() * PPT
+                gc, ghost.getPostition().x() * PPT, ghost.getPostition().y() * PPT
             );
         }
     }
@@ -175,7 +177,7 @@ public class GameView implements Observer {
         gc.setFill(Color.WHITE);
         gc.fillText(Integer.toString(model.getScore()), WIDTH - 200, HEIGHT - 20);
     }
-    
+
     private void drawLevel(GameModel model){
         gc.setFill(Color.WHITE);
         gc.fillText("Level " + Integer.toString(model.getLevel()), 200, HEIGHT - 20);
