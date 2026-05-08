@@ -1,3 +1,149 @@
-iqweqwe qwe
- asda sdsa
- 
+\documentclass[a4paper,12pt]{article}
+\usepackage[a4paper,margin=2.4cm]{geometry} \linespread{1.25} 
+\usepackage[english]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[page,toc]{appendix}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage[T1]{fontenc}	
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\DeclareGraphicsExtensions{.png}	\graphicspath{{figures/}}               
+\renewcommand{\arraystretch}{1.15}
+
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\lfoot{}
+\cfoot{}
+\rfoot{\thepage{}}
+
+\pagestyle{fancy}
+\lhead{Group X}
+\chead{Title}
+\rhead{\today}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+% Defines a new command for 
+% horizontal lines, change thickness here
+
+\center % Centre everything on the page
+
+	%------------------------------------------------
+	%	Headings
+	%------------------------------------------------
+
+	\textsc{\LARGE University of Southern Denmark}\\[1.5cm]
+	% Main heading such as the name of your university/college
+
+	\textsc{\Large Department of Mathematics and Computer Science}\\[0.5cm]
+	%Major heading such as course name
+
+	\textsc{\large DM575: Object-Oriented Programming}\\[0.5cm]
+	% COURSE ID AND NAME
+
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+
+	\HRule\\[0.7cm]
+
+	{\huge\bfseries Pacman}\\[0.4cm] % Title of your document
+
+	\HRule\\[1.0cm]
+
+	%------------------------------------------------
+	%	Author(s)
+	%------------------------------------------------
+	\large
+	\textsc{Group T20:}\\ \bigskip
+	\begin{minipage}[t]{0.45\textwidth}
+	    \begin{center}
+		    \normalsize
+		    Ehsan Sorousharzani\\
+		    x\@x.x\\ \bigskip
+		    Vincent Kirk Bonné\\
+		    x\@x.x\\ \bigskip
+
+	   \end{center}
+	\end{minipage}
+	~
+	\begin{minipage}[t]{0.45\textwidth}
+	    \begin{center}
+		    \normalsize
+		    Sebastian Juhl-Jensen\\
+		    x\@x.x\\ \bigskip
+		\end{center}
+	\end{minipage}
+	
+
+	%------------------------------------------------
+	%	Date
+	%------------------------------------------------
+
+	\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+
+	{\large \today}
+
+	%------------------------------------------------
+	%	Logo
+	%------------------------------------------------
+
+	\vfill\vfill
+	\begin{centering}
+	\includegraphics[width=0.3\textwidth]{SDU_logo}\\[1cm]
+	\end{centering}
+	
+%-------------------------------------------------------------------------------
+
+	\vfill % Push the date up 1/4 of the remaining page
+
+\end{titlepage}
+
+\pagenumbering{arabic}
+
+\section{Introduction and Preliminaries}
+
+
+
+\newpage
+\section{Design}
+
+%todo this is how you can add a diagram in latex
+%\begin{figure}[t]
+%	\includegraphics{} %todo add path to diagram
+%	\caption{title}		%todo add a title
+%	\label{fig:diagram} %todo allows you to reference \autoref{fig:diagram} the figure
+%\end{figure}
+
+DRY: MovingEntity, Ghost classes
+
+SOLID:
+Single Responsibility Principle: Opdeling af model i Maze, Pacman etc.
+Open/Closed Principle: Ghost abstract class indeholder basal Ghost logic, men udvides til andre behaviours ved inhreitance
+Liskov Substitution Principle: Inky, Blinky etc. overrider
+
+
+\section{Implementation}
+
+    
+\section{Quality assurance}
+
+
+\section{Project management}
+
+
+\section{Discussion}
+
+
+
+\end{document}
