@@ -44,8 +44,8 @@ public abstract class Ghost extends MovingEntity {
 
 
     public void update_direction(Pacman pacman, Maze maze) {
-        if (lastpos.equals(Position.floorPosition(position)) && lastPacman == Position.floorPosition(pacman.getPostition()))
-            return;
+//        if (lastpos.equals(Position.floorPosition(position)) && lastPacman == Position.floorPosition(pacman.getPostition()))
+//            return;
 
         Position target = new Position(0, 0);
         switch (state) {

@@ -64,7 +64,8 @@ public class AStar {
             }
 
             for (Direction d : Direction.getDirections()) {
-                if (current.equals(start) && d == oppositeDirection)
+                // they can go backwards in the prison to avoid getting stuck
+                if (current.equals(start) && d == oppositeDirection && !maze.inPrison(start))
                     continue;
 
                 double neighbourx = current.x() + d.dx;

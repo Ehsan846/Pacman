@@ -4,7 +4,7 @@ public class Pinky extends Ghost {
 
     public Pinky() {
         type = GhostType.PINKY;
-        position = new Position(13.5, 14);
+        position = new Position(13.5, 14.1);
     }
 
     @Override
