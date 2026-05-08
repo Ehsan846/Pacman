@@ -125,12 +125,20 @@
 %	\label{fig:diagram} %todo allows you to reference \autoref{fig:diagram} the figure
 %\end{figure}
 
-DRY: MovingEntity, Ghost classes
+
+DRY - Dont Repeat Yourself:
+MovingEntity indeholder den kode alle movingentities skal dele, så det ikke skrives flere gange
+
 
 SOLID:
 Single Responsibility Principle: Opdeling af model i Maze, Pacman etc.
 Open/Closed Principle: Ghost abstract class indeholder basal Ghost logic, men udvides til andre behaviours ved inhreitance
-Liskov Substitution Principle: Inky, Blinky etc. overrider
+Liskov Substitution Principle: Inky, Blinky etc. overrider kun scatter og target, med det samme forventet resultat, at finde et target at gå mod, ikke andre uforventede side effects.
+Interface Segregation Principle: MovingEntity indeholder fx ikke ghost specifik kode, da andre entities ikke nødvendigvis har brug for det.
+Dependency Inversion Principle: I stedet for at have en Inky, en Blinky etc. i Model, har vi en liste over Ghosts, som indeholder de forskellige typer.
+
+
+Har vi brugt andre OO Principper?
 
 
 \section{Implementation}
