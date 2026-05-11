@@ -131,7 +131,9 @@ public class GameModel implements Subject {
         if (stateDuration <= 0) {
             state = GameState.NORMAL;
             for (Ghost ghost : ghosts)
+                if (ghost.getState() != GhostState.DEAD){
                 ghost.normal();
+            }
 
         }
 
