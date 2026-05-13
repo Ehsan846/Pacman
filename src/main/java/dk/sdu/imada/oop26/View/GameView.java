@@ -73,7 +73,7 @@ public class GameView {
 
     private void drawGame() {
         drawBackground();
-        
+
         gc.save();
         gc.translate(PPT / 2, PPT / 2); // Offset for centering
 
@@ -90,15 +90,6 @@ public class GameView {
     }
 
     private void sortRenderables() {
-        Collections.sort(renderables, new Comparator<Renderable>() {
-            @Override
-            public int compare(Renderable r1, Renderable r2) {
-                if (r1.getLayer() > r2.getLayer())
-                    return 1;
-                else if (r1.getLayer() < r2.getLayer())
-                    return -1;
-                return 0;
-            }
-        });
+        Collections.sort(renderables, (a, b) -> Integer.compare(a.getLayer(), b.getLayer()));
     }
 }
