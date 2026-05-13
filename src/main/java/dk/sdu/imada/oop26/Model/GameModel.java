@@ -57,7 +57,7 @@ public class GameModel implements Subject {
             if (ghost.isAlive()) {
                 checkGhostCollission(ghost);
             } else if (maze.getTile(ghost.getPostition()) == Tile.GhostRespawn) {
-                if (state != GameState.POWER) {
+                if (state != GameState.POWER && state != GameState.IMMUNE) {
                     ghost.normal();
                 } else {
                     ghost.scared();
