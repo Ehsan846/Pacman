@@ -6,26 +6,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.scene.text.Font;
-import dk.sdu.imada.oop26.Model.Blinky;
-import dk.sdu.imada.oop26.Model.Clyde;
-import dk.sdu.imada.oop26.Model.GameModel;
-import dk.sdu.imada.oop26.Model.GhostType;
-import dk.sdu.imada.oop26.Model.Inky;
-import dk.sdu.imada.oop26.Model.Ghost;
-import dk.sdu.imada.oop26.Model.Maze;
-import dk.sdu.imada.oop26.Model.Pinky;
-import dk.sdu.imada.oop26.Model.Subject;
-import dk.sdu.imada.oop26.Model.Tile;
-import dk.sdu.imada.oop26.Model.Position;
-import dk.sdu.imada.oop26.Model.GameState;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Collections;
 
 import dk.sdu.imada.oop26.Controller.GameController;
-
 
 public class GameView {
     private Scene scene;
@@ -41,10 +27,7 @@ public class GameView {
     public static final int WIDTH = 644;
     public static final int HEIGHT = 754;
 
-    public GameView(GameController gamecontroller, List<Renderable> renderables) {
-        this.renderables = renderables;
-        sortRenderables();
-
+    public GameView(GameController gamecontroller) {
         canvas = new Canvas(WIDTH, HEIGHT);
         scene = new Scene(new Group(canvas));
         gc = canvas.getGraphicsContext2D();
@@ -56,6 +39,11 @@ public class GameView {
 
         Sprite spritesheet = new Sprite("spritesheet.png");
         Sprites.loadSprites(spritesheet.getImage());
+    }
+
+    public void setRenderables(List<Renderable> renderables) {
+        this.renderables = renderables;
+        sortRenderables();
     }
 
     public Scene getScene() {

@@ -8,7 +8,6 @@ import dk.sdu.imada.oop26.Model.Position;
 import dk.sdu.imada.oop26.Model.Maze;
 import dk.sdu.imada.oop26.Model.Subject;
 import dk.sdu.imada.oop26.Model.Tile;
-import dk.sdu.imada.oop26.Model.GameModel;
 
 public class PelletRenderer implements Renderable {
     private GameModel model;

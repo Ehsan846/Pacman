@@ -1,10 +1,9 @@
 package dk.sdu.imada.oop26.View;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.PixelReader;
-import dk.sdu.imada.oop26.View.Sprites;
-import javafx.scene.canvas.GraphicsContext;
 
 public class Sprite {
     private Image sprite;

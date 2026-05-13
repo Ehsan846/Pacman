@@ -1,9 +1,9 @@
 package dk.sdu.imada.oop26.View;
 
 import javafx.scene.canvas.GraphicsContext;
+
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.GameModel;
-import dk.sdu.imada.oop26.Model.GameState;
 import dk.sdu.imada.oop26.Model.Ghost;
 import dk.sdu.imada.oop26.Model.GhostState;
 import dk.sdu.imada.oop26.Model.GhostType;
@@ -14,13 +14,14 @@ public class GhostRenderer extends Animator implements Renderable {
     private final GhostType ghostType;
 
     private Direction direction;
-    private Position position;
+    private Position position = new Position(0, 0);
 
     private GhostState prevState = GhostState.DEAD;
     private double prevDuration = 0;
 
     public GhostRenderer(GhostType ghostType) {
         this.ghostType = ghostType;
+        setSprites(Sprites.getGhostSprites(ghostType), true, 0.05);
     }
 
     // Renderable

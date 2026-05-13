@@ -1,6 +1,7 @@
 package dk.sdu.imada.oop26.View;
 
 import javafx.scene.canvas.GraphicsContext;
+
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.GameModel;
 import dk.sdu.imada.oop26.Model.GameState;
@@ -9,12 +10,14 @@ import dk.sdu.imada.oop26.Model.Subject;
 
 public class PacmanRenderer extends Animator implements Renderable {
     private Direction direction;
-    private Position position;
+    private Position position = new Position(0, 0);
     private double stateDuration;
 
     GameState prevState = GameState.FINISHED;
 
-    public PacmanRenderer() { }
+    public PacmanRenderer() {
+        setSprites(Sprites.pacman, true, 0.05);
+    }
 
     // Renderable
     @Override

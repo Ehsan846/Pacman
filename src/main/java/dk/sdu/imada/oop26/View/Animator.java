@@ -1,7 +1,6 @@
 package dk.sdu.imada.oop26.View;
 
 import dk.sdu.imada.oop26.Model.Direction;
-import dk.sdu.imada.oop26.View.Sprites;
 
 public class Animator {
     private Sprite[] sprites;
@@ -40,6 +39,9 @@ public class Animator {
     }
 
     public Sprite getDirectionalSprite(Direction dir) {
+        if (sprites == null)
+            return Sprites.emptySprite;
+        
         int index = current;
         if (spriteCount != sprites.length)
             index += spriteCount * Sprites.getRotationOffset(dir);

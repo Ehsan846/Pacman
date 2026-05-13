@@ -10,14 +10,9 @@ import javafx.animation.AnimationTimer;
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.sdu.imada.oop26.Model.Blinky;
-import dk.sdu.imada.oop26.Model.Clyde;
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.GameModel;
-import dk.sdu.imada.oop26.Model.Ghost;
 import dk.sdu.imada.oop26.Model.GhostType;
-import dk.sdu.imada.oop26.Model.Inky;
-import dk.sdu.imada.oop26.Model.Pinky;
 import dk.sdu.imada.oop26.Model.Observer;
 import dk.sdu.imada.oop26.View.GameView;
 import dk.sdu.imada.oop26.View.Renderable;
@@ -32,12 +27,14 @@ public class GameController extends Application {
 
     public GameController() {
         model = new GameModel();
+        view = new GameView(this);
 
         List<Renderable> renderables = createRenderables();
         for (Renderable renderable : renderables)
             model.registerObserver(renderable);
         
-        view = new GameView(this, renderables);
+        view.setRenderables(renderables);
+        model.notifyObservers();
     }
 
     public static void main(String[] args) {

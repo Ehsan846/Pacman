@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class GameModel implements Subject {
-    private GameState state = GameState.NORMAL;
+    private GameState state = GameState.FINISHED;
     private double stateDuration = 0;
-    private int lives = 3;
+    private double startDelay = 0;
+    private int lives = STARTING_LIVES;
     private int level = 1;
 
     private Pacman pacman;
@@ -19,10 +20,12 @@ public class GameModel implements Subject {
     // Observers
 	private final List<Observer> observers = new LinkedList<>();
 
+    public final static int STARTING_LIVES = 3;
+
     public GameModel() {
         resetGame();
+        state = GameState.FINISHED;
     }
-
 
     public void update(double dt) {
         if (!handleState(dt)) {
@@ -67,8 +70,9 @@ public class GameModel implements Subject {
     }
 
     private void resetGame() {
-        state = GameState.NORMAL;
+        state = GameState.STARTING;
         stateDuration = 0;
+        startDelay = 3;
 
         // Just redefine our stuff, since the old stuff no longer have a reference they are picked up by garbage collector
         maze = new Maze();
@@ -82,6 +86,13 @@ public class GameModel implements Subject {
         ghosts.add(blinky);
         ghosts.add(new Inky(blinky));
         notifyObservers();
+    }
+
+    private void restartGame() {
+        lives = STARTING_LIVES;
+        level = 1;
+        score = 0;
+        resetGame();
     }
 
     private void pacmanDeath() {
@@ -115,6 +126,14 @@ public class GameModel implements Subject {
     private boolean handleState(double dt) {
         if (state == GameState.FINISHED){
             return false;
+        } else if (state == GameState.STARTING) {
+            startDelay -= dt;
+            if (startDelay <= 0) {
+                startDelay = 0;
+                state = GameState.NORMAL;
+            }
+            notifyObservers();
+            return false;
         }
 
         //all pellets eaten games done
@@ -147,6 +166,10 @@ public class GameModel implements Subject {
 
     public double getPowerDuration() {
         return stateDuration;
+    }
+
+    public double getStartDelay() {
+        return startDelay;
     }
 
     public boolean pacmanAlive() {
@@ -186,6 +209,9 @@ public class GameModel implements Subject {
     }
 
     public void setDirection(Direction direction) {
+        if (state == GameState.FINISHED)
+            restartGame();
+
         pacman.setWantedDirection(direction);
     }
 
