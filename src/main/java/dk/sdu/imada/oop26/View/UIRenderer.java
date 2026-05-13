@@ -57,7 +57,7 @@ public class UIRenderer implements Renderable {
     }
 
     private void renderLives(GraphicsContext gc) {
-        for (int i = 0; i < lives - 1; i++) {
+        for (int i = 0; i < lives; i++) {
             Sprites.lives.draw(
                 gc, LOWER_UI.x() + i * Sprites.DRAWSIZE, LOWER_UI.y()
             );
@@ -81,6 +81,6 @@ public class UIRenderer implements Renderable {
             gc.fillText("Game Over  ", GameView.WIDTH / 2, GameView.HEIGHT / 3);
             gc.fillText("Score: " + Integer.toString(score) + "  ", GameView.WIDTH / 2, GameView.HEIGHT / 3 + 40);
         }
-        gc.fillText("Press any key to start  ", GameView.WIDTH / 2, GameView.HEIGHT / 3 + 150);
+        gc.fillText("Press direction key to start  ", GameView.WIDTH / 2, GameView.HEIGHT / 3 + 150);
     }
 }

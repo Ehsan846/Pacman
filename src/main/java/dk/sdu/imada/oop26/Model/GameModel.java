@@ -19,7 +19,7 @@ public class GameModel implements Subject {
     // Observers
 	private final List<Observer> observers = new LinkedList<>();
 
-    public final static int STARTING_LIVES = 3;
+    public final static int STARTING_LIVES = 2;
 
     public GameModel() {
         resetGame();
@@ -40,7 +40,7 @@ public class GameModel implements Subject {
                 maze.emptyTile(e);
                 score++;
             } else if (tile == Tile.PowerPellet) {
-                score++;
+                score += 5;
                 maze.emptyTile(e);
 
                 state = GameState.POWER;
@@ -95,7 +95,7 @@ public class GameModel implements Subject {
     }
 
     private void pacmanDeath() {
-        if (--lives < 1) {
+        if (--lives < 0) {
             state = GameState.FINISHED;
             return;
         }
@@ -114,7 +114,7 @@ public class GameModel implements Subject {
             && pacmanY < ghostY + 1.5 && pacmanY > ghostY - 1.5) {
             if (state == GameState.POWER) {
                 ghost.eat();
-                score++;
+                score += 10;
             } else if (state != GameState.IMMUNE ) {
                 pacmanDeath();
             }
