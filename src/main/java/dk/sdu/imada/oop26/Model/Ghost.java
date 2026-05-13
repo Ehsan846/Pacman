@@ -1,6 +1,5 @@
 package dk.sdu.imada.oop26.Model;
 
-
 public abstract class Ghost extends MovingEntity {
     protected GhostState state = GhostState.ALIVE;
     protected GhostType type;

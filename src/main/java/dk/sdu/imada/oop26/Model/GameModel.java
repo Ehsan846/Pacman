@@ -3,7 +3,6 @@ package dk.sdu.imada.oop26.Model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
 public class GameModel implements Subject {
     private GameState state = GameState.FINISHED;

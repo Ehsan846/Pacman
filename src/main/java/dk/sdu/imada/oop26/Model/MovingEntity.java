@@ -2,9 +2,7 @@ package dk.sdu.imada.oop26.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Arrays;
-import java.util.AbstractMap.SimpleEntry;
 
 import dk.sdu.imada.oop26.Model.Direction;
 import dk.sdu.imada.oop26.Model.Tile;
