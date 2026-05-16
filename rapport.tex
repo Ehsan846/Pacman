@@ -161,7 +161,7 @@ Nok også noget andet.
 \subsection{Ghost behaviour}
 When we first implemented this we only had a single ghost to make testing easier.
 
-In the original pacman they didnt use a real search algorithm as far as we could tell. %TODO: reference here
+In the \href{https://github.com/mburkley/pacman-c/blob/main/pacman.c#L11993}{original pacman} they didnt use a real search algorithm as far as we could tell. %TODO: reference here
 They just chose the direction that would  move them the closest to pacman. So that is the first thing we tried.
 The code looked like this.
 \begin{verbatim}
@@ -190,7 +190,11 @@ public void goto_target(double targetX, double targetY, Maze maze) {
 }
 \end{verbatim}
 
-We didnt end up going for this in the as the ghosts often made bad decisions. In the we used the A star algorithm to find the fastest path.
+We didnt end up going for this in the end as the ghosts often made bad decisions.
+
+In our final version we used the A star algorithm to find the fastest path.
+It is the standard version of astar taken from \href{https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode}{Wikipedia}.
+With some minor changes to make it apply better to our needs like not being able to go backwards.
 
     
 \section{Quality assurance}
