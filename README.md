@@ -1,8 +1,6 @@
-# Pacman
+# Pacman Game
+This is a collaborative project i did with friends and uni for a course.
 
-# TODO
-
-Opgavens requirements vi mangler (copy paste direkte fra opgavebeskrivelsen):
 # STATES
 The game has four states: Normal, Immune, Power, and Finished.
 The game begins in the state Normal with a life counter of two.
@@ -25,22 +23,6 @@ a short period of time (e.g., 1-2 seconds) before reverting back to the state No
 In the state Finished, the game displays the latest score, and offers the option to start a new game
 (which would reset the score).
 
-
-
-
-# View
-[x] Draw Score
-[ ] Sprite Factory
-
-# Model
-[x] Pacman death
-[x] Score
-[x] PowerPellet
-[x] Ghost pathing - Chase
-[x] Ghost pathing - Respawn
-[ ] Ghost pathing - Flee
-[x] Ghost pathing - OPTIONAL: Scatter
-[x] Ghost kill/respawn
 [ ] Newlevel når alle pellets er spist
 [x] Portal (Ghosts er langsommere i portal området)
 [x] Block pacman fra ghost room
