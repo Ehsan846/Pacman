@@ -1,5 +1,5 @@
 # Pacman Game
-This is a collaborative project i did with friends and uni for a course.
+This is a collaborative project i did together with friends for a course.
 The main focus of this project has been to put our knowledge of object-oriented programming into play. 
 
 # STATES
